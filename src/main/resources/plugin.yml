@@ -1,0 +1,3 @@
+name: DeltaAPI
+version: ${project.version}
+main: club.deltapvp.deltacore.api.DeltaAPI
