@@ -1,6 +1,5 @@
 package club.deltapvp.deltacore.api.utilities.builder;
 
-import dev.negativekb.baseplugin.annotation.ConfirmTested;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;

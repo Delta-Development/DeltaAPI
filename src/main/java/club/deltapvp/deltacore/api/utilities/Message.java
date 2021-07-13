@@ -1,6 +1,5 @@
 package club.deltapvp.deltacore.api.utilities;
 
-import dev.negativekb.baseplugin.annotation.ConfirmTested;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -16,7 +15,6 @@ import java.util.List;
  *
  * @author Negative
  */
-@ConfirmTested(tested = "1.8.9 and 1.16.5")
 public class Message {
 
     @Getter
