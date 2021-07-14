@@ -2,6 +2,7 @@ package club.deltapvp.deltacore.api.commands;
 
 import club.deltapvp.deltacore.api.commands.annotation.*;
 import club.deltapvp.deltacore.api.utilities.Message;
+import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -210,10 +211,13 @@ public abstract class ICommand extends Command {
             Command command = commandMap.getCommand(name);
             if (command != null) {
                 Map<String, Command> map;
-                Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
-                commandField.setAccessible(true);
-                map = (Map<String, Command>) commandField.get(commandMap);
-
+                if (VersionChecker.getInstance().isLegacy()) {
+                    Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
+                    commandField.setAccessible(true);
+                    map = (Map<String, Command>) commandField.get(commandMap);
+                } else {
+                    map = (Map<String, Command>) commandMap.getClass().getDeclaredMethod("getKnownCommands").invoke(commandMap);
+                }
                 command.unregister(commandMap);
                 map.remove(name);
                 this.getAliases().forEach(map::remove);
