@@ -56,22 +56,33 @@ public abstract class ICommand extends Command {
         super(name, description, "/" + name, aliases);
 
         boolean hasInfo = getClass().isAnnotationPresent(CommandInfo.class);
-        if (!hasInfo) {
-            boolean hasDisabled = getClass().isAnnotationPresent(Disabled.class);
-            boolean hasPlayerOnly = getClass().isAnnotationPresent(PlayerOnly.class);
-            boolean hasConsoleOnly = getClass().isAnnotationPresent(ConsoleOnly.class);
-            boolean hasPerm = getClass().isAnnotationPresent(Permission.class);
+        boolean hasDisabled = getClass().isAnnotationPresent(Disabled.class);
+        boolean hasPlayerOnly = getClass().isAnnotationPresent(PlayerOnly.class);
+        boolean hasConsoleOnly = getClass().isAnnotationPresent(ConsoleOnly.class);
+        boolean hasPerm = getClass().isAnnotationPresent(Permission.class);
+        if (hasDisabled)
+            setDisabled(true);
 
-            setConsoleOnly(hasConsoleOnly);
-            setPlayerOnly(hasPlayerOnly);
-            setDisabled(hasDisabled);
-            if (hasPerm)
-                setPermissionNode(getClass().getAnnotation(Permission.class).perm());
-        } else {
+        if (hasPlayerOnly)
+            setPlayerOnly(true);
+
+        if (hasConsoleOnly)
+            setConsoleOnly(true);
+
+        if (hasPerm)
+            setPermissionNode(getClass().getAnnotation(Permission.class).perm());
+
+        if (hasInfo) {
             CommandInfo annotation = getClass().getAnnotation(CommandInfo.class);
-            setConsoleOnly(annotation.consoleOnly());
-            setPlayerOnly(annotation.playerOnly());
-            setDisabled(annotation.disabled());
+            if (annotation.consoleOnly())
+                setConsoleOnly(true);
+
+            if (annotation.playerOnly())
+                setPlayerOnly(true);
+
+            if (annotation.disabled())
+                setDisabled(true);
+
             if (annotation.aliases().length != 0) {
                 List<String> a = new ArrayList<>(Arrays.asList(annotation.aliases()));
                 setAliases(a);
@@ -122,9 +133,6 @@ public abstract class ICommand extends Command {
         // If the permission node is not null and not empty
         // but, if the user doesn't have permission for the command
         // send this message
-
-        Permission annoPerm = getClass().getAnnotation(Permission.class);
-        boolean hasPermissionAnno = getClass().isAnnotationPresent(Permission.class);
         if (!getPermissionNode().isEmpty()) {
             if (!sender.hasPermission(getPermissionNode())) {
                 noPerm.send(sender);

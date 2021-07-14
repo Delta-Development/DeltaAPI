@@ -1,6 +1,6 @@
 package club.deltapvp.deltacore.api.commands;
 
-import club.deltapvp.deltacore.api.commands.annotation.CommandInfo;
+import club.deltapvp.deltacore.api.commands.annotation.*;
 import club.deltapvp.deltacore.api.utilities.Message;
 import lombok.Getter;
 import lombok.Setter;
@@ -74,6 +74,22 @@ public abstract class ISubCommand {
         this.argument = argument;
         this.aliases = aliases;
 
+        boolean hasDisabled = getClass().isAnnotationPresent(Disabled.class);
+        boolean hasPlayerOnly = getClass().isAnnotationPresent(PlayerOnly.class);
+        boolean hasConsoleOnly = getClass().isAnnotationPresent(ConsoleOnly.class);
+        boolean hasPerm = getClass().isAnnotationPresent(Permission.class);
+        if (hasDisabled)
+            setDisabled(true);
+
+        if (hasPlayerOnly)
+            setPlayerOnly(true);
+
+        if (hasConsoleOnly)
+            setConsoleOnly(true);
+
+        if (hasPerm)
+            setPermission(getClass().getAnnotation(Permission.class).perm());
+
         if (this.getClass().isAnnotationPresent(CommandInfo.class)) {
             CommandInfo annotation = this.getClass().getAnnotation(CommandInfo.class);
             setArgument(annotation.name());
@@ -84,8 +100,7 @@ public abstract class ISubCommand {
                 setAliases(a);
             }
 
-            boolean hasPerm = !annotation.permission().isEmpty();
-            if (hasPerm)
+            if (!annotation.permission().isEmpty())
                 setPermission(annotation.permission());
 
         }
