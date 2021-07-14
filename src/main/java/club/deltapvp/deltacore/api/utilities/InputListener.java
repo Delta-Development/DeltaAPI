@@ -9,7 +9,8 @@ import java.util.function.BiConsumer;
 
 public abstract class InputListener {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static InputListener instance;
 
     public abstract void listen(UUID uuid, BiConsumer<Player, String> function);

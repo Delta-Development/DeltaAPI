@@ -5,9 +5,11 @@ import lombok.Setter;
 
 public abstract class VersionChecker {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static VersionChecker instance;
 
     public abstract boolean isModern();
+
     public abstract boolean isLegacy();
 }
