@@ -1,6 +1,6 @@
 # DeltaAPI
 
-## Maven Repo
+## ✨Maven Repo
 
 ### Repository
 ```xml
