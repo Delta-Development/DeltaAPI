@@ -17,4 +17,4 @@
             <scope>provided</scope>
         </dependency>
 ```
-![JitPack](https://img.shields.io/jitpack/v/github/Delta-Development/DeltaAPI?style=flat-square)
+![JitPack](https://img.shields.io/jitpack/v/github/Delta-Development/DeltaAPI?style=for-the-badge)
