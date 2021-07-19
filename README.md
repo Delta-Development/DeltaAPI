@@ -2,13 +2,14 @@
 
 ## Maven Repo
 
+### Repository
 ```
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
 ```
-
+### Dependency
 ```
         <dependency>
             <groupId>com.github.Delta-Development</groupId>
