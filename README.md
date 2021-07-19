@@ -29,7 +29,7 @@ In order for this API to work, you will need to setup your Main class as follows
         // Plugin startup logic
         setInstance(this);
 ```
-This tells the API what your main class. From here, you can use any part of the API in your plugin!
+This tells the API what your main class is. From here, you can use any part of the API in your plugin!
 ### Message Util
 In DeltaAPI, there is a message util that makes sending messages easier. No more using `ChatColor.translateAlternateColorCodes`. 
 Here are some examples of the util being used:
