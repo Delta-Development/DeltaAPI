@@ -42,4 +42,4 @@ new Message("&cHello &lworld").send(p); // Sends the message to the player with 
 new Message("&4&lTHIS IS A BROADCAST").broadcast(); // Sends a message to everyone on the server with colour and formatting.
 ```
 ### ICommand 
-# Info coming soon
+#### Info coming soon
