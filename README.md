@@ -1,6 +1,6 @@
 # DeltaAPI
 
-## JitPack info
+## Maven Repo
 
 ```
         <repository>
