@@ -1,3 +1,5 @@
+![GitHub issues](https://img.shields.io/github/issues/Delta-Development/DeltaAPI?style=for-the-badge)
+
 # DeltaAPI
 
 ## ✨Maven Repo
