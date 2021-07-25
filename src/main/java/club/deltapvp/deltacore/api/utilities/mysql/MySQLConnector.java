@@ -60,7 +60,7 @@ public class MySQLConnector {
     }
 
     /**
-     * Disconnect Function - Attempts to disconnect from the given MySQL Database
+     * Attempts to disconnect from the given MySQL Database
      */
     public void disconnect() {
         if (!isConnected()) return;

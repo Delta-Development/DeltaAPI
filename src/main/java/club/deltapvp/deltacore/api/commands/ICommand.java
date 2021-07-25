@@ -116,28 +116,22 @@ public abstract class ICommand extends Command {
             return true;
         }
 
-        if (isPlayerOnly()) {
-            if (!(sender instanceof Player)) {
-                cannotUseThis.send(sender);
-                return true;
-            }
+        if (isPlayerOnly() && !(sender instanceof Player)) {
+            cannotUseThis.send(sender);
+            return true;
         }
 
-        if (isConsoleOnly()) {
-            if (sender instanceof Player) {
-                cannotUseThis.send(sender);
-                return true;
-            }
+        if (isConsoleOnly() && sender instanceof Player) {
+            cannotUseThis.send(sender);
+            return true;
         }
 
         // If the permission node is not null and not empty
         // but, if the user doesn't have permission for the command
         // send this message
-        if (!getPermissionNode().isEmpty()) {
-            if (!sender.hasPermission(getPermissionNode())) {
-                noPerm.send(sender);
-                return true;
-            }
+        if (!getPermissionNode().isEmpty() && !sender.hasPermission(getPermissionNode())) {
+            noPerm.send(sender);
+            return true;
         }
 
 

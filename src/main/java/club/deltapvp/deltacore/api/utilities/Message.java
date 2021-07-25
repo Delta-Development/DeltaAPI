@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,11 +24,10 @@ public class Message {
     @Setter
     private String message;
 
-    /**
-     * Message Constructor (as String)
-     *
-     * @param msg Message
-     */
+    public Message(List<String> list) {
+        this(list.toArray(new String[0]));
+    }
+
     public Message(String... msg) {
         String actual = String.join("\n", msg);
         setMessage(actual);
@@ -35,9 +35,7 @@ public class Message {
     }
 
     /**
-     * Replacer
-     * <p>
-     * Simply replaces object1 with object2.
+     * Replaces object1 with object2.
      * Could be a string, int, double, whatever
      *
      * @param o1 - Object 1
@@ -51,7 +49,6 @@ public class Message {
         }
 
         String newMSG = this.message;
-
         newMSG = newMSG.replaceAll(String.valueOf(o1), String.valueOf(o2));
 
         setMessage(newMSG);
@@ -59,8 +56,6 @@ public class Message {
     }
 
     /**
-     * Send Message
-     * <p>
      * Sends the message to a CommandSender.
      * Usually a player or console
      *
@@ -69,9 +64,7 @@ public class Message {
     public void send(CommandSender sender) {
         if (this.message.contains("\n")) {
             String[] msg = getMessage().split("\n");
-            for (String s : msg) {
-                sender.sendMessage(translate(s));
-            }
+            Arrays.stream(msg).forEach(s -> sender.sendMessage(translate(s)));
             this.message = initial;
             return;
         }
@@ -80,9 +73,7 @@ public class Message {
     }
 
     /**
-     * Send Message to a list of players
-     * <p>
-     * Simply sends the message to a list of players
+     * Sends the message to a list of players
      *
      * @param players - List of players
      */
@@ -91,17 +82,12 @@ public class Message {
     }
 
     /**
-     * Broadcast message
-     * <p>
-     * Simply broadcasts the message for
-     * all to see!
+     * Broadcasts the message for all to see!
      */
     public void broadcast() {
         if (getMessage().contains("\n")) {
             String[] msg = getMessage().split("\n");
-            for (String s : msg) {
-                Bukkit.broadcastMessage(translate(s));
-            }
+            Arrays.stream(msg).forEach(s -> Bukkit.broadcastMessage(translate(s)));
             setMessage(getInitial());
             return;
         }
