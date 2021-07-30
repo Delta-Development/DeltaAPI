@@ -1,0 +1,21 @@
+name: Auto assign Issues and PRs to project.
+
+on:
+  issues:
+    types: [opened, labeled]
+  pull_request_target:
+    types: [opened]
+env:
+  MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign to One Project
+    steps:
+    - name: Assign NEW issues and NEW pull requests to project
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: github.event.action == 'opened'
+      with:
+        project: 'https://github.com/orgs/Delta-Development/projects/1'
+        column_name: 'To Do'
