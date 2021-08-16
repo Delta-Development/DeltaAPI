@@ -6,7 +6,8 @@ import org.bukkit.entity.Player;
 
 public abstract class BungeecordUtil {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static BungeecordUtil instance;
 
     public abstract void sendPlayerToServer(Player player, String server);

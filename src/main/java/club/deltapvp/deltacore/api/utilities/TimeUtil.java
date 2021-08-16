@@ -95,7 +95,7 @@ public class TimeUtil {
                     .replace("%day%", "")
                     .replace("%hour%", (hourNotZero ? toHour + (shortened ? "" : " ") + hour + " " : ""))
                     .replace("%min%", (minuteNotZero ? toMin + (shortened ? "" : " ") + minute + " " : ""))
-                    .replace("%sec%", toSec + (shortened ? "" : " ") + second)
+                    .replace("%sec%", (secondNotZero ? toMin + (shortened ? "" : " ") + second + " " : ""))
                     .getMessage();
         }
 
@@ -140,7 +140,7 @@ public class TimeUtil {
                 .replace("%day%", (dayNotZero ? toDays + (shortened ? "" : " ") + day + " " : ""))
                 .replace("%hour%", (hourNotZero ? toHour + (shortened ? "" : " ") + hour + " " : ""))
                 .replace("%min%", (minuteNotZero ? toMin + (shortened ? "" : " ") + minute + " " : ""))
-                .replace("%sec%", toSec + (shortened ? "" : " ") + second)
+                .replace("%sec%", (secondNotZero ? toMin + (shortened ? "" : " ") + second + " " : ""))
                 .getMessage();
     }
 
