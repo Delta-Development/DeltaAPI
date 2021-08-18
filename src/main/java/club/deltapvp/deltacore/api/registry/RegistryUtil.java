@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
+@Deprecated
 public class RegistryUtil {
 
     /**
