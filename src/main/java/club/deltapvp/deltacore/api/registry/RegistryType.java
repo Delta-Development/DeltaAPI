@@ -1,16 +1,19 @@
 package club.deltapvp.deltacore.api.registry;
 
 import club.deltapvp.deltacore.api.commands.ICommand;
+import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 /**
  * RegistryType
@@ -94,15 +97,44 @@ public enum RegistryType {
 
                 Object c = clazz.newInstance();
                 ICommand cmd = (ICommand) c;
+
                 try {
                     Server server = Bukkit.getServer();
                     Field field = server.getClass().getDeclaredField("commandMap");
                     field.setAccessible(true);
                     CommandMap commandMap = (CommandMap) field.get(server);
-                    commandMap.register(cmd.getName(), cmd);
+
+                    String name = this.getName();
+
+                    Command command = commandMap.getCommand(name);
+                    if (command != null) {
+                        Map<String, Command> map;
+                        if (VersionChecker.getInstance().isLegacy()) {
+                            Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
+                            commandField.setAccessible(true);
+                            map = (Map<String, Command>) commandField.get(commandMap);
+                        } else {
+                            map = (Map<String, Command>) commandMap.getClass().getDeclaredMethod("getKnownCommands").invoke(commandMap);
+                        }
+                        command.unregister(commandMap);
+                        map.remove(name);
+                        cmd.getAliases().forEach(map::remove);
+                    }
+
+                    commandMap.register(name, cmd);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+//                try {
+//                    Server server = Bukkit.getServer();
+//                    Field field = server.getClass().getDeclaredField("commandMap");
+//                    field.setAccessible(true);
+//                    CommandMap commandMap = (CommandMap) field.get(server);
+//                    commandMap.register(cmd.getName(), cmd);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
             }
 
             default: {
