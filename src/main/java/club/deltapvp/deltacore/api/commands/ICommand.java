@@ -94,7 +94,7 @@ public abstract class ICommand extends Command {
                 setPermissionNode(annotation.permission());
         }
 
-        registerCommand();
+//        registerCommand();
     }
 
     public abstract void onCommand(CommandSender sender, String[] args);
@@ -191,6 +191,7 @@ public abstract class ICommand extends Command {
      * Command Register
      */
     @SuppressWarnings("unchecked")
+    @Deprecated
     private void registerCommand() {
 
         try {
