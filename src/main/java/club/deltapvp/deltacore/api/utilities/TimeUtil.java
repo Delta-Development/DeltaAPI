@@ -59,7 +59,7 @@ public class TimeUtil {
                     .replace("%day%", "")
                     .replace("%hour%", "")
                     .replace("%min%", (toMin + (shortened ? "" : " ") + minute + (toMin == 1 && !secondNotZero ? "" : " ")))
-                    .replace("%sec%", toSec + (shortened ? "" : " ") + second)
+                    .replace("%sec%", (secondNotZero ? toMin + (shortened ? "" : " ") + second + " " : ""))
                     .getMessage();
         }
 
