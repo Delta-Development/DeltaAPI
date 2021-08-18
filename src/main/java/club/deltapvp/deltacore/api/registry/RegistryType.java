@@ -135,6 +135,7 @@ public enum RegistryType {
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
+                break;
             }
 
             default: {

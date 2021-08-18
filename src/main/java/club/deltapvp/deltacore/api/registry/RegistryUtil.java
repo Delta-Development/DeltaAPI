@@ -3,6 +3,7 @@ package club.deltapvp.deltacore.api.registry;
 import lombok.experimental.UtilityClass;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -26,7 +27,8 @@ public class RegistryUtil {
                 .collect(Collectors.toList());
 
         collect.forEach(type -> {
-            classes.stream().filter(aClass -> aClass.getDeclaredAnnotation(Registry.class).type().equals(type))
+            List<Class<?>> temp = new ArrayList<>(classes);
+            temp.stream().filter(aClass -> aClass.getDeclaredAnnotation(Registry.class).type().equals(type))
                     .sorted(Comparator.comparingInt(value -> value.getDeclaredAnnotation(Registry.class).priority().getPriority()))
                     .forEach(aClass -> type.register(plugin, aClass));
         });
