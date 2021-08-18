@@ -191,7 +191,6 @@ public abstract class ICommand extends Command {
      * Command Register
      */
     @SuppressWarnings("unchecked")
-    @Deprecated
     private void registerCommand() {
 
         try {

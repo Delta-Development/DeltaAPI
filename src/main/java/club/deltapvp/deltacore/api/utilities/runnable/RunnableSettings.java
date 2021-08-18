@@ -1,4 +1,4 @@
-package club.deltapvp.deltacore.api.registry;
+package club.deltapvp.deltacore.api.utilities.runnable;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
