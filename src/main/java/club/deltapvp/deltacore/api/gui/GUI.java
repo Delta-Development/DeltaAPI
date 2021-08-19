@@ -3,11 +3,13 @@ package club.deltapvp.deltacore.api.gui;
 import club.deltapvp.deltacore.api.utilities.builder.ItemBuilder;
 import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,6 +39,9 @@ public class GUI {
     // Map of active inventories
     @Getter
     private final HashMap<Player, Inventory> activeInventories;
+
+    @Getter @Setter
+    private BiConsumer<Player, InventoryCloseEvent> onClose;
 
     // Are people allowed to take items from the GUI?
     @Getter

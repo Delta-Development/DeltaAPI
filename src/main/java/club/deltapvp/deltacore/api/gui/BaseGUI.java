@@ -3,6 +3,7 @@ package club.deltapvp.deltacore.api.gui;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
@@ -19,7 +20,10 @@ public class BaseGUI implements InventoryHolder {
         this.gui = gui;
     }
 
-    public void onClose(Player player) {
+    public void onClose(Player player, InventoryCloseEvent event) {
+        if (gui.getOnClose() != null)
+            gui.getOnClose().accept(player, event);
+
         gui.getActiveInventories().remove(player);
     }
 
