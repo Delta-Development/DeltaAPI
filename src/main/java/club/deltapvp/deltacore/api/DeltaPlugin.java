@@ -54,7 +54,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
                 field.setAccessible(true);
                 CommandMap commandMap = (CommandMap) field.get(server);
 
-                String name = this.getName();
+                String name = iCommand.getName();
 
                 Command command = commandMap.getCommand(name);
                 if (command != null) {
