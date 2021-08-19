@@ -148,6 +148,13 @@ public class GUI {
         setItem(i, item);
     }
 
+    public void refreshItems(Player player) {
+        if (activeInventories.get(player) == null || !(player.getInventory() instanceof BaseGUI))
+            return;
+
+        items.forEach((slot, item) -> player.getInventory().setItem(slot, item));
+    }
+
     /**
      * Set "Fillers" from one index slot to another
      *
