@@ -86,7 +86,12 @@ public class GUI {
         BaseGUI holder = new BaseGUI(this);
         Inventory inv = Bukkit.createInventory(holder, (9 * rows), ChatColor.translateAlternateColorCodes('&', title));
 
-        items.forEach(inv::setItem);
+        items.forEach((index, item) -> {
+            try {
+                inv.setItem(index, item);
+            } catch (Exception ignored) {
+            }
+        });
 
         player.openInventory(inv);
         activeInventories.put(player, inv);
