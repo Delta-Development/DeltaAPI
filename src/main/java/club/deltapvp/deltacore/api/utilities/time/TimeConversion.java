@@ -1,4 +1,4 @@
-package club.deltapvp.deltacore.api.utilities;
+package club.deltapvp.deltacore.api.utilities.time;
 
 public interface TimeConversion {
 

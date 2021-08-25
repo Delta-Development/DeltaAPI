@@ -1,4 +1,4 @@
-package club.deltapvp.deltacore.api.utilities.version;
+package club.deltapvp.deltacore.api.utilities.file.enums;
 
 public enum ServerVersion {
 

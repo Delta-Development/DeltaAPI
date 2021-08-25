@@ -1,9 +1,8 @@
 package club.deltapvp.deltacore.api;
 
 import club.deltapvp.deltacore.api.commands.ICommand;
-import club.deltapvp.deltacore.api.utilities.FileUtils;
 import club.deltapvp.deltacore.api.utilities.runnable.RunnableSettings;
-import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
+import club.deltapvp.deltacore.api.utilities.file.VersionChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -34,7 +33,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
             FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
 
             if (!file.exists())
-                FileUtils.loadResource(plugin, name);
+                DeltaAPI.getInstance().getFileLoader().loadFile(plugin, name);
 
             try {
                 fileConfig.load(file);

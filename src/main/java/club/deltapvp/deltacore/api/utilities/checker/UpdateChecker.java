@@ -1,4 +1,4 @@
-package club.deltapvp.deltacore.api.utilities;
+package club.deltapvp.deltacore.api.utilities.checker;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
