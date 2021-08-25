@@ -306,8 +306,13 @@ public class ItemBuilder {
             LeatherArmorMeta im = (LeatherArmorMeta) is.getItemMeta();
             im.setColor(color);
             is.setItemMeta(im);
-        } catch (ClassCastException expected) {
+        } catch (ClassCastException ignored) {
         }
+        return this;
+    }
+
+    public ItemBuilder setMaterial(Material material) {
+        this.is.setType(material);
         return this;
     }
 
