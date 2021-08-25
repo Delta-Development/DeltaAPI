@@ -179,40 +179,6 @@ public class ItemBuilder {
     }
 
     /**
-     * Re-sets the lore.
-     *
-     * @param lore The lore to set it to.
-     */
-    public ItemBuilder setLore(String... lore) {
-        ItemMeta im = is.getItemMeta();
-
-        List<String> l = new ArrayList<>();
-        for (String s : lore) {
-            l.add(ChatColor.translateAlternateColorCodes('&', s));
-        }
-        im.setLore(l);
-
-        is.setItemMeta(im);
-        return this;
-    }
-
-    /**
-     * Re-sets the lore.
-     *
-     * @param lore The lore to set it to.
-     */
-    public ItemBuilder setLore(List<String> lore) {
-        ItemMeta im = is.getItemMeta();
-
-        List<String> l = new ArrayList<>();
-        lore.forEach(s -> l.add(ChatColor.translateAlternateColorCodes('&', s)));
-
-        im.setLore(l);
-        is.setItemMeta(im);
-        return this;
-    }
-
-    /**
      * Remove a lore line.
      */
     public ItemBuilder removeLoreLine(String line) {
@@ -320,6 +286,39 @@ public class ItemBuilder {
         return this.is.getItemMeta().getLore();
     }
 
+    /**
+     * Re-sets the lore.
+     *
+     * @param lore The lore to set it to.
+     */
+    public ItemBuilder setLore(String... lore) {
+        ItemMeta im = is.getItemMeta();
+
+        List<String> l = new ArrayList<>();
+        for (String s : lore) {
+            l.add(ChatColor.translateAlternateColorCodes('&', s));
+        }
+        im.setLore(l);
+
+        is.setItemMeta(im);
+        return this;
+    }
+
+    /**
+     * Re-sets the lore.
+     *
+     * @param lore The lore to set it to.
+     */
+    public ItemBuilder setLore(List<String> lore) {
+        ItemMeta im = is.getItemMeta();
+
+        List<String> l = new ArrayList<>();
+        lore.forEach(s -> l.add(ChatColor.translateAlternateColorCodes('&', s)));
+
+        im.setLore(l);
+        is.setItemMeta(im);
+        return this;
+    }
 
     /**
      * Retrieves the itemstack from the ItemBuilder.

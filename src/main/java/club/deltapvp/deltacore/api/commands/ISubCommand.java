@@ -1,7 +1,8 @@
 package club.deltapvp.deltacore.api.commands;
 
-import club.deltapvp.deltacore.api.commands.annotation.*;
-import club.deltapvp.deltacore.api.utilities.Message;
+import club.deltapvp.deltacore.api.DeltaAPI;
+import club.deltapvp.deltacore.api.commands.annotation.CommandInfo;
+import club.deltapvp.deltacore.api.utilities.message.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -24,6 +25,9 @@ public abstract class ISubCommand {
     // subcommands of subcommands lol
     @Getter
     private final List<ISubCommand> subCommands = new ArrayList<>();
+    private final Message cannotUseThis;
+    private final Message commandDisabled;
+    private final Message noPerm;
     @Setter
     @Getter
     private String argument;
@@ -33,15 +37,12 @@ public abstract class ISubCommand {
     @Getter
     @Setter
     private String permission = "";
-
     @Getter
     @Setter
     private boolean consoleOnly = false;
-
     @Getter
     @Setter
     private boolean playerOnly = false;
-
     @Getter
     @Setter
     private boolean disabled;
@@ -73,21 +74,10 @@ public abstract class ISubCommand {
         this.argument = argument;
         this.aliases = aliases;
 
-        boolean hasDisabled = getClass().isAnnotationPresent(Disabled.class);
-        boolean hasPlayerOnly = getClass().isAnnotationPresent(PlayerOnly.class);
-        boolean hasConsoleOnly = getClass().isAnnotationPresent(ConsoleOnly.class);
-        boolean hasPerm = getClass().isAnnotationPresent(Permission.class);
-        if (hasDisabled)
-            setDisabled(true);
-
-        if (hasPlayerOnly)
-            setPlayerOnly(true);
-
-        if (hasConsoleOnly)
-            setConsoleOnly(true);
-
-        if (hasPerm)
-            setPermission(getClass().getAnnotation(Permission.class).perm());
+        DeltaAPI api = DeltaAPI.getInstance();
+        cannotUseThis = api.createMessage("&cYou cannot use this!");
+        commandDisabled = api.createMessage("&cThis command is currently disabled.");
+        noPerm = api.createMessage("&cYou do not have permission to use this.");
 
         if (this.getClass().isAnnotationPresent(CommandInfo.class)) {
             CommandInfo annotation = this.getClass().getAnnotation(CommandInfo.class);
@@ -102,6 +92,8 @@ public abstract class ISubCommand {
             if (!annotation.permission().isEmpty())
                 setPermission(annotation.permission());
 
+        } else {
+            throw new NullPointerException("Sub-Command does not have @CommandInfo annotation.");
         }
     }
 
@@ -109,17 +101,17 @@ public abstract class ISubCommand {
         // If the Command is disabled, send this message
 
         if (isDisabled()) {
-            new Message("&cThis command is disabled.").send(sender);
+            commandDisabled.send(sender);
             return;
         }
 
-        if (isPlayerOnly()) {
-            new Message("&cYou cannot use this.").send(sender);
+        if (isPlayerOnly() && !(sender instanceof Player)) {
+            cannotUseThis.send(sender);
             return;
         }
 
-        if (isConsoleOnly()) {
-            new Message("&cYou cannot use this.").send(sender);
+        if (isConsoleOnly() && sender instanceof Player) {
+            cannotUseThis.send(sender);
             return;
         }
 
@@ -127,9 +119,8 @@ public abstract class ISubCommand {
         // but, if the user doesn't have permission for the command
         // send this message
         if (!getPermission().isEmpty()) {
-            Message message = new Message("&cYou do not have permission to use this!");
             if (!sender.hasPermission(getPermission())) {
-                message.send(sender);
+                noPerm.send(sender);
                 return;
             }
         }

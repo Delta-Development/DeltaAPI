@@ -1,12 +1,9 @@
 package club.deltapvp.deltacore.api.gui;
 
-import club.deltapvp.deltacore.api.utilities.builder.ItemBuilder;
-import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -39,13 +36,12 @@ public class GUI {
     // Map of active inventories
     @Getter
     private final HashMap<Player, Inventory> activeInventories;
-
-    @Getter @Setter
-    private BiConsumer<Player, InventoryCloseEvent> onClose;
-
     // Are people allowed to take items from the GUI?
     @Getter
     private final boolean allowTakeItems;
+    @Getter
+    @Setter
+    private BiConsumer<Player, InventoryCloseEvent> onClose;
 
     /**
      * Constructor for GUI
@@ -165,104 +161,4 @@ public class GUI {
         items.forEach((slot, item) -> player.getInventory().setItem(slot, item));
     }
 
-    /**
-     * Set "Fillers" from one index slot to another
-     *
-     * @param indexMin Minimum index slot
-     * @param indexMax Maximum index slot
-     * @apiNote Default Data for filler is 15!
-     */
-    public void setFillers(int indexMin, int indexMax) {
-        setFillers(15, indexMin, indexMax);
-    }
-
-    /**
-     * Set "Fillers" from one index to another
-     *
-     * @param data     Data of the filler (what color it is)
-     * @param indexMin Minimum index slot
-     * @param indexMax Maximum index slot
-     */
-    public void setFillers(int data, int indexMin, int indexMax) {
-        for (int i = indexMin; i < indexMax; i++) {
-            setFiller(data, i);
-        }
-    }
-
-    /**
-     * Set "Fillers" from one index to another
-     *
-     * @param material Material of the Filler
-     * @param indexMin Minimum index slot
-     * @param indexMax Maximum index slot
-     */
-    public void setFillers(Material material, int indexMin, int indexMax) {
-        for (int i = indexMin; i < indexMax; i++) {
-            setFiller(material, i);
-        }
-    }
-
-    /**
-     * Set a "Filler" at a certain index slot
-     *
-     * @param data  Data of the filler (what color it is)
-     * @param index Index slot
-     */
-    public void setFiller(int data, int index) {
-        setItemClickEvent(index, getFiller(data), (player, event) -> event.setCancelled(true));
-    }
-
-    /**
-     * Set a "Filler" at a certain index slot
-     *
-     * @param material Material of the filler
-     * @param index    Index slot
-     * @apiNote Recommended for modern versions of Minecraft!
-     */
-    public void setFiller(Material material, int index) {
-        setItemClickEvent(index, getFiller(material), (player, event) -> event.setCancelled(true));
-    }
-
-    /**
-     * Get the Filler ItemStack
-     *
-     * @return Filler Item
-     * @apiNote Default data of filler is 15 (what color it is)!
-     */
-    public ItemStack getFiller() {
-        return getFiller(15);
-    }
-
-    /**
-     * Set a "Filler" at a certain index slot
-     *
-     * @param index Index slot
-     * @apiNote Default data of filler is 15 (what color it is)!
-     */
-    public void setFiller(int index) {
-        setFiller(15, index);
-    }
-
-    /**
-     * Get the Filler ItemStack
-     *
-     * @param data Data of the filler (what color it is)
-     * @return Filler Item
-     */
-    public ItemStack getFiller(int data) {
-        return (VersionChecker.getInstance().isModern() ? new ItemBuilder(Material.valueOf("BLACK_STAINED_GLASS_PANE"))
-                .setName("         ").build() : new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability((short) data)
-                .setName("             ").build());
-    }
-
-    /**
-     * Get the Filler ItemStack
-     *
-     * @param material Material of the filler
-     * @return Filler Item
-     * @apiNote Recommended for Modern verions of Minecraft!
-     */
-    public ItemStack getFiller(Material material) {
-        return new ItemBuilder(material).setName("          ").build();
-    }
 }

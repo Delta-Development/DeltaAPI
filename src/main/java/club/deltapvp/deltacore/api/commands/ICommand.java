@@ -1,26 +1,30 @@
 package club.deltapvp.deltacore.api.commands;
 
-import club.deltapvp.deltacore.api.commands.annotation.*;
-import club.deltapvp.deltacore.api.utilities.Message;
-import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
+import club.deltapvp.deltacore.api.DeltaAPI;
+import club.deltapvp.deltacore.api.commands.annotation.CommandInfo;
+import club.deltapvp.deltacore.api.utilities.message.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public abstract class ICommand extends Command {
     @Getter
     private final List<ISubCommand> subCommands = new ArrayList<>();
+    private final Message cannotUseThis;
+    private final Message commandDisabled;
+    private final Message noPerm;
     @Getter
     @Setter
     public boolean consoleOnly = false;
@@ -33,7 +37,6 @@ public abstract class ICommand extends Command {
     @Getter
     @Setter
     public String permissionNode = "";
-
     private TabCompleter completer;
 
     public ICommand() {
@@ -55,23 +58,12 @@ public abstract class ICommand extends Command {
     public ICommand(String name, String description, List<String> aliases) {
         super(name, description, "/" + name, aliases);
 
+        DeltaAPI api = DeltaAPI.getInstance();
+        cannotUseThis = api.createMessage("&cYou cannot use this!");
+        commandDisabled = api.createMessage("&cThis command is currently disabled.");
+        noPerm = api.createMessage("&cYou do not have permission to use this.");
+
         boolean hasInfo = getClass().isAnnotationPresent(CommandInfo.class);
-        boolean hasDisabled = getClass().isAnnotationPresent(Disabled.class);
-        boolean hasPlayerOnly = getClass().isAnnotationPresent(PlayerOnly.class);
-        boolean hasConsoleOnly = getClass().isAnnotationPresent(ConsoleOnly.class);
-        boolean hasPerm = getClass().isAnnotationPresent(Permission.class);
-        if (hasDisabled)
-            setDisabled(true);
-
-        if (hasPlayerOnly)
-            setPlayerOnly(true);
-
-        if (hasConsoleOnly)
-            setConsoleOnly(true);
-
-        if (hasPerm)
-            setPermissionNode(getClass().getAnnotation(Permission.class).perm());
-
         if (hasInfo) {
             CommandInfo annotation = getClass().getAnnotation(CommandInfo.class);
             if (annotation.consoleOnly())
@@ -92,9 +84,10 @@ public abstract class ICommand extends Command {
 
             if (!annotation.permission().isEmpty())
                 setPermissionNode(annotation.permission());
+        } else {
+            throw new NullPointerException("Command does not have @CommandInfo annotation.");
         }
 
-//        registerCommand();
     }
 
     public abstract void onCommand(CommandSender sender, String[] args);
@@ -107,12 +100,8 @@ public abstract class ICommand extends Command {
     public boolean execute(CommandSender sender, String label, String[] args) {
         // If the Command is disabled, send this message
 
-        Message cannotUseThis = new Message("&cYou cannot use this");
-        Message disabled = new Message("&cThis command is disabled.");
-        Message noPerm = new Message("&cYou do not have permission to use this!");
-
         if (isDisabled()) {
-            disabled.send(sender);
+            commandDisabled.send(sender);
             return true;
         }
 
@@ -188,53 +177,9 @@ public abstract class ICommand extends Command {
     }
 
     /**
-     * Command Register
-     */
-    @SuppressWarnings("unchecked")
-    private void registerCommand() {
-
-        try {
-            Server server = Bukkit.getServer();
-            Field field = server.getClass().getDeclaredField("commandMap");
-            field.setAccessible(true);
-            CommandMap commandMap = (CommandMap) field.get(server);
-
-            String name = this.getName();
-
-            Command command = commandMap.getCommand(name);
-            if (command != null) {
-                Map<String, Command> map;
-                if (VersionChecker.getInstance().isLegacy()) {
-                    Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
-                    commandField.setAccessible(true);
-                    map = (Map<String, Command>) commandField.get(commandMap);
-                } else {
-                    map = (Map<String, Command>) commandMap.getClass().getDeclaredMethod("getKnownCommands").invoke(commandMap);
-                }
-                command.unregister(commandMap);
-                map.remove(name);
-                this.getAliases().forEach(map::remove);
-            }
-
-            commandMap.register(name, this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @param s - String-name of the player we are trying to find
-     * @return - Returns whether or not the player has been found
-     */
-    public boolean findPlayer(String s) {
-        Player target = Bukkit.getServer().getPlayer(s);
-        return target != null;
-    }
-
-    /**
      * @param sender - Sender of the command. Usually a player
      * @param perm   - Permission node
-     * @return - Returns whether or not the player has the permission provided in the "perm" String
+     * @return - Returns whether the player has the permission provided in the "perm" String
      */
     public boolean hasPermission(CommandSender sender, String perm) {
         Server server = Bukkit.getServer();
@@ -267,16 +212,13 @@ public abstract class ICommand extends Command {
 
     @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
-        if (completer == null) {
+        if (completer == null || this.completer.onTabComplete(sender, this, alias, args) == null) {
             String lastWord = args[args.length - 1];
             Player senderPlayer = sender instanceof Player ? (Player) sender : null;
-            ArrayList<String> matchedPlayers = new ArrayList<String>();
-            for (Player player : sender.getServer().getOnlinePlayers()) {
-                String name = player.getName();
-                if ((sender == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, lastWord)) {
-                    matchedPlayers.add(name);
-                }
-            }
+            ArrayList<String> matchedPlayers = new ArrayList<>();
+            sender.getServer().getOnlinePlayers().stream()
+                    .filter(player -> senderPlayer == null || senderPlayer.canSee(player) && StringUtil.startsWithIgnoreCase(player.getName(), lastWord))
+                    .forEach(player -> matchedPlayers.add(player.getName()));
 
             matchedPlayers.sort(String.CASE_INSENSITIVE_ORDER);
             return matchedPlayers;

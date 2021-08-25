@@ -44,6 +44,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
 
             fileConfig.getKeys(false).forEach(priceString -> fileConfig.set(priceString, fileConfig.getString(priceString)));
         });
+
     }
 
     public void registerCommands(ICommand... commands) {
@@ -59,7 +60,8 @@ public abstract class DeltaPlugin extends JavaPlugin {
                 Command command = commandMap.getCommand(name);
                 if (command != null) {
                     Map<String, Command> map;
-                    if (VersionChecker.getInstance().isLegacy()) {
+                    VersionChecker checker = DeltaAPI.getInstance().getVersionChecker();
+                    if (checker.isLegacy()) {
                         Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
                         commandField.setAccessible(true);
                         map = (Map<String, Command>) commandField.get(commandMap);
