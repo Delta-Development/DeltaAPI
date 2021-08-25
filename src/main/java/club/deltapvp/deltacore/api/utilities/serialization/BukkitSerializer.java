@@ -9,7 +9,7 @@ public interface BukkitSerializer {
     /**
      * Write a PlayerInventory to Base64.
      * @param inventory Player Inventory
-     * @return String[0] is Inventory, String[0] is Armor.
+     * @return String[0] is Inventory, String[1] is Armor.
      */
     String[] playerInventoryToBase64(PlayerInventory inventory) throws IllegalStateException;
 
