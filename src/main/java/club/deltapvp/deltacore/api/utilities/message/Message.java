@@ -19,4 +19,8 @@ public interface Message {
 
     void broadcast();
 
+    String getMessage();
+
+    String getMessage(String... replacers);
+
 }
