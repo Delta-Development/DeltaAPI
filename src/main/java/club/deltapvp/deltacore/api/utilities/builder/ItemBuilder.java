@@ -316,6 +316,10 @@ public class ItemBuilder {
         return this;
     }
 
+    public List<String> getLore() {
+        return this.is.getItemMeta().getLore();
+    }
+
 
     /**
      * Retrieves the itemstack from the ItemBuilder.
