@@ -1,5 +1,6 @@
 package club.deltapvp.deltacore.api.utilities.builder;
 
+import club.deltapvp.deltacore.api.DeltaAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
@@ -90,7 +91,7 @@ public class ItemBuilder {
      */
     public ItemBuilder setName(String name) {
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        im.setDisplayName(translate(name));
         is.setItemMeta(im);
         return this;
     }
@@ -215,7 +216,7 @@ public class ItemBuilder {
         ItemMeta im = is.getItemMeta();
         List<String> lore = new ArrayList<>();
         if (im.hasLore()) lore = new ArrayList<>(im.getLore());
-        lore.add(ChatColor.translateAlternateColorCodes('&', line));
+        lore.add(translate(line));
         im.setLore(lore);
         is.setItemMeta(im);
         return this;
@@ -230,7 +231,7 @@ public class ItemBuilder {
     public ItemBuilder addLoreLine(String line, int pos) {
         ItemMeta im = is.getItemMeta();
         List<String> lore = new ArrayList<>(im.getLore());
-        lore.set(pos, ChatColor.translateAlternateColorCodes('&', line));
+        lore.set(pos, translate(line));
         im.setLore(lore);
         is.setItemMeta(im);
         return this;
@@ -296,7 +297,7 @@ public class ItemBuilder {
 
         List<String> l = new ArrayList<>();
         for (String s : lore) {
-            l.add(ChatColor.translateAlternateColorCodes('&', s));
+            l.add(translate(s));
         }
         im.setLore(l);
 
@@ -313,7 +314,7 @@ public class ItemBuilder {
         ItemMeta im = is.getItemMeta();
 
         List<String> l = new ArrayList<>();
-        lore.forEach(s -> l.add(ChatColor.translateAlternateColorCodes('&', s)));
+        lore.forEach(s -> l.add(translate(s)));
 
         im.setLore(l);
         is.setItemMeta(im);
@@ -327,5 +328,14 @@ public class ItemBuilder {
      */
     public ItemStack build() {
         return is;
+    }
+
+    private String translate(String s) {
+        DeltaAPI api = DeltaAPI.getInstance();
+        boolean modern = api.getVersionChecker().isModern();
+        if (modern)
+            return api.getHexValidator().validate(s);
+        else
+            return ChatColor.translateAlternateColorCodes('&', s);
     }
 }

@@ -1,6 +1,7 @@
 package club.deltapvp.deltacore.api;
 
 import club.deltapvp.deltacore.api.bungeecord.BungeeCord;
+import club.deltapvp.deltacore.api.utilities.hex.HexValidator;
 import club.deltapvp.deltacore.api.utilities.time.TimeConversion;
 import club.deltapvp.deltacore.api.utilities.checker.UpdateChecker;
 import club.deltapvp.deltacore.api.utilities.file.FileLoader;
@@ -38,5 +39,7 @@ public abstract class DeltaAPI {
     public abstract FileLoader getFileLoader();
 
     public abstract BukkitSerializer getBukkitSerializer();
+
+    public abstract HexValidator getHexValidator();
 
 }
