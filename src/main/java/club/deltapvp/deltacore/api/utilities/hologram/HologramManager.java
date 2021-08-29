@@ -1,6 +1,7 @@
 package club.deltapvp.deltacore.api.utilities.hologram;
 
 import org.bukkit.Location;
+import org.bukkit.entity.ArmorStand;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,8 @@ public interface HologramManager {
     Hologram getHologram(int id);
 
     Hologram getHologram(Location location);
+
+    Hologram getHologram(ArmorStand armorStand);
 
     ArrayList<Hologram> getHolograms();
 
