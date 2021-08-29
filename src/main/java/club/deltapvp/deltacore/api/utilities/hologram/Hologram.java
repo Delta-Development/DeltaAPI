@@ -30,10 +30,14 @@ public interface Hologram {
 
     void onInteraction(BiConsumer<Player, HologramInteractEvent> function);
 
+    BiConsumer<Player, HologramInteractEvent> getInteractionFunction();
+
     void addLine(String text);
 
     void setLine(int index, String text);
 
     void setSpaceInBetween(double number);
+
+
 
 }
