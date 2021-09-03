@@ -7,11 +7,11 @@ import java.util.function.BiPredicate;
 
 public interface VirtualSignEditor {
 
-    VirtualSign createSignEditor(List<String> lines);
+    AbstractSignMenu createSign(List<String> lines);
 
-    VirtualSign createSignEditor(List<String> lines, boolean reOpenIfFail);
+    AbstractSignMenu createSign(List<String> lines, boolean reOpenIfFail);
 
-    VirtualSign createSignEditor(List<String> lines, boolean reOpenIfFail, BiPredicate<Player, String[]> response);
+    AbstractSignMenu createSign(List<String> lines, boolean reOpenIfFail, BiPredicate<Player, String[]> response);
 
-    VirtualSign createSignEditor(List<String> lines, BiPredicate<Player, String[]> response);
+    AbstractSignMenu createSign(List<String> lines, BiPredicate<Player, String[]> response);
 }
