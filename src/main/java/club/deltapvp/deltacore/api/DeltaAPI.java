@@ -3,6 +3,7 @@ package club.deltapvp.deltacore.api;
 import club.deltapvp.deltacore.api.bungeecord.BungeeCord;
 import club.deltapvp.deltacore.api.utilities.hex.HexValidator;
 import club.deltapvp.deltacore.api.utilities.hologram.HologramManager;
+import club.deltapvp.deltacore.api.utilities.sign.VirtualSignEditor;
 import club.deltapvp.deltacore.api.utilities.skull.CustomSkull;
 import club.deltapvp.deltacore.api.utilities.time.TimeConversion;
 import club.deltapvp.deltacore.api.utilities.checker.UpdateChecker;
@@ -48,4 +49,5 @@ public abstract class DeltaAPI {
 
     public abstract CustomSkull createCustomSkull(String url);
 
+    public abstract VirtualSignEditor getVirtualSignEditor();
 }
