@@ -133,12 +133,12 @@ public class BiMap<K, V, V1> {
      * @return Value
      * @throws NullPointerException If the entry does not exist inside the entry data
      */
-    public V getFirst(K key) {
+    public Optional<V> getFirst(K key) {
         if (!getEntry(key).isPresent())
             throw new NullPointerException("This entry with key of `" + key.toString() + "` is not in the BiMap");
 
         Entry<K, V, V1> entry = getEntry(key).get();
-        return entry.getValue1();
+        return Optional.ofNullable(entry.getValue1());
     }
 
     /**
@@ -148,9 +148,9 @@ public class BiMap<K, V, V1> {
      * @return Value
      * @throws ArrayIndexOutOfBoundsException if the Index value given is out of the index bounds
      */
-    public V getFirst(int index) {
+    public Optional<V> getFirst(int index) {
         Entry<K, V, V1> entry = this.data.get(index);
-        return entry.getValue1();
+        return Optional.ofNullable(entry.getValue1());
     }
 
     /**
@@ -160,12 +160,12 @@ public class BiMap<K, V, V1> {
      * @return Value
      * @throws NullPointerException If the entry does not exist inside the entry data
      */
-    public V1 getSecond(K key) {
+    public Optional<V1> getSecond(K key) {
         if (!getEntry(key).isPresent())
             throw new NullPointerException("This entry with key of `" + key.toString() + "` is not in the BiMap");
 
         Entry<K, V, V1> entry = getEntry(key).get();
-        return entry.getValue2();
+        return Optional.ofNullable(entry.getValue2());
     }
 
     /**
@@ -175,9 +175,9 @@ public class BiMap<K, V, V1> {
      * @return Value
      * @throws ArrayIndexOutOfBoundsException if the Index value given is out of the index bounds
      */
-    public V1 getSecond(int index) {
+    public Optional<V1> getSecond(int index) {
         Entry<K, V, V1> entry = this.data.get(index);
-        return entry.getValue2();
+        return Optional.ofNullable(entry.getValue2());
     }
 
     /**

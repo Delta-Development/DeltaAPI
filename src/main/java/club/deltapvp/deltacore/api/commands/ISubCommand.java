@@ -9,10 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * SubCommand
@@ -190,12 +187,12 @@ public abstract class ISubCommand {
     }
 
     /**
-     * @param s - String-name of the player we are trying to find
-     * @return - Returns whether or not the player has been found
+     * Checks to see if a Player is online
+     * @param name Name
+     * @return Optional
      */
-    public boolean findPlayer(String s) {
-        Player target = Bukkit.getServer().getPlayer(s);
-        return target != null;
+    public Optional<Player> getPlayer(String name) {
+        return Optional.ofNullable(Bukkit.getPlayer(name));
     }
 
 }

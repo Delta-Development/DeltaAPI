@@ -82,7 +82,7 @@ public abstract class ICommand extends Command {
             if (!annotation.permission().isEmpty())
                 setPermissionNode(annotation.permission());
         } else {
-            throw new NullPointerException("Command does not have @CommandInfo annotation.");
+            throw new NullPointerException("Command `" + getClass().getSimpleName() + "` does not have @CommandInfo annotation.");
         }
 
     }
