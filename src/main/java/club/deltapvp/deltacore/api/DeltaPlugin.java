@@ -56,21 +56,21 @@ public abstract class DeltaPlugin extends JavaPlugin {
 
                 String name = iCommand.getName();
 
-                Command command = commandMap.getCommand(name);
-                if (command != null) {
-                    Map<String, Command> map;
-                    VersionChecker checker = DeltaAPI.getInstance().getVersionChecker();
-                    if (checker.isLegacy()) {
-                        Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
-                        commandField.setAccessible(true);
-                        map = (Map<String, Command>) commandField.get(commandMap);
-                    } else {
-                        map = (Map<String, Command>) commandMap.getClass().getDeclaredMethod("getKnownCommands").invoke(commandMap);
-                    }
-                    command.unregister(commandMap);
-                    map.remove(name);
-                    iCommand.getAliases().forEach(map::remove);
-                }
+//                Command command = commandMap.getCommand(name);
+//                if (command != null) {
+//                    Map<String, Command> map;
+//                    VersionChecker checker = DeltaAPI.getInstance().getVersionChecker();
+//                    if (checker.isLegacy()) {
+//                        Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
+//                        commandField.setAccessible(true);
+//                        map = (Map<String, Command>) commandField.get(commandMap);
+//                    } else {
+//                        map = (Map<String, Command>) commandMap.getClass().getDeclaredMethod("getKnownCommands").invoke(commandMap);
+//                    }
+//                    command.unregister(commandMap);
+//                    map.remove(name);
+//                    iCommand.getAliases().forEach(map::remove);
+//                }
 
                 commandMap.register(name, iCommand);
             } catch (Exception e) {
