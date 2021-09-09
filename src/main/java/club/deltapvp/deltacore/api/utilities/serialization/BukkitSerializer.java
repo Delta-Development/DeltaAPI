@@ -8,6 +8,7 @@ public interface BukkitSerializer {
 
     /**
      * Write a PlayerInventory to Base64.
+     *
      * @param inventory Player Inventory
      * @return String[0] is Inventory, String[1] is Armor.
      */
@@ -15,6 +16,7 @@ public interface BukkitSerializer {
 
     /**
      * Write an ItemStack Array to Base64.
+     *
      * @param itemStacks Items
      * @return Encoded Base64
      */
@@ -22,6 +24,7 @@ public interface BukkitSerializer {
 
     /**
      * Writes an Inventory to Base64
+     *
      * @param inventory Inventory
      * @return Encoded Base64
      */
@@ -29,6 +32,7 @@ public interface BukkitSerializer {
 
     /**
      * Gets an Inventory from Base64
+     *
      * @param base64 Encoded Base64
      * @return Inventory Object
      */
@@ -36,6 +40,7 @@ public interface BukkitSerializer {
 
     /**
      * Gets an ItemStack Array from Base64
+     *
      * @param base64 Encoded Base64
      * @return ItemStack Array
      */

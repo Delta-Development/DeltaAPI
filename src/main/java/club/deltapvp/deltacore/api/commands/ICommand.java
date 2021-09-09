@@ -190,6 +190,7 @@ public abstract class ICommand extends Command {
 
     /**
      * Checks if a player is online
+     *
      * @param name Player Name
      * @return Optional Player
      */

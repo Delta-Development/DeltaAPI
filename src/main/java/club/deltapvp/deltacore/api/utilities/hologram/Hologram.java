@@ -1,6 +1,5 @@
 package club.deltapvp.deltacore.api.utilities.hologram;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -24,9 +23,9 @@ public interface Hologram {
 
     void load();
 
-    void setLocation(Location location);
-
     Location getLocation();
+
+    void setLocation(Location location);
 
     void onInteraction(BiConsumer<Player, HologramInteractEvent> function);
 
@@ -37,7 +36,6 @@ public interface Hologram {
     void setLine(int index, String text);
 
     void setSpaceInBetween(double number);
-
 
 
 }
