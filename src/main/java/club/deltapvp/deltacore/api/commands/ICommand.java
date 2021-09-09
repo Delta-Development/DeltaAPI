@@ -63,6 +63,8 @@ public abstract class ICommand extends Command {
         boolean hasInfo = getClass().isAnnotationPresent(CommandInfo.class);
         if (hasInfo) {
             CommandInfo annotation = getClass().getAnnotation(CommandInfo.class);
+            setName(annotation.name());
+
             if (annotation.consoleOnly())
                 setConsoleOnly(true);
 
@@ -72,12 +74,13 @@ public abstract class ICommand extends Command {
             if (annotation.disabled())
                 setDisabled(true);
 
-            if (annotation.aliases().length != 0) {
-                List<String> a = new ArrayList<>(Arrays.asList(annotation.aliases()));
+            List<String> a = new ArrayList<>(Arrays.asList(annotation.aliases()));
+            // There will always be an empty index even if no arguments are
+            // set. So the way you identify if there are actual arguments in the command
+            // is you check if the first index is empty.
+            if (!a.get(0).isEmpty()) {
                 setAliases(a);
             }
-
-            setName(annotation.name());
 
             if (!annotation.permission().isEmpty())
                 setPermissionNode(annotation.permission());
