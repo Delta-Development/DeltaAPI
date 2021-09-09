@@ -13,10 +13,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
 
 public abstract class ICommand extends Command {
@@ -189,6 +186,15 @@ public abstract class ICommand extends Command {
         } else {
             return p.hasPermission(perm);
         }
+    }
+
+    /**
+     * Checks if a player is online
+     * @param name Player Name
+     * @return Optional Player
+     */
+    public Optional<Player> getPlayer(String name) {
+        return Optional.ofNullable(Bukkit.getPlayer(name));
     }
 
     /**
