@@ -188,6 +188,7 @@ public abstract class ISubCommand {
 
     /**
      * Checks to see if a Player is online
+     *
      * @param name Name
      * @return Optional
      */
