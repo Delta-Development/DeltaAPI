@@ -161,10 +161,11 @@ public class GUI {
     }
 
     public void refresh(Player player) {
-        if (activeInventories.get(player) == null || !(player.getInventory() instanceof BaseGUI))
+        if (activeInventories.get(player) == null)
             return;
 
-        items.forEach((slot, item) -> player.getInventory().setItem(slot, item.apply(player)));
+        Inventory inv = activeInventories.get(player);
+        items.forEach((slot, item) -> inv.setItem(slot, item.apply(player)));
     }
 
     public void setAutoRefreshInterval(DeltaPlugin plugin, Player player, int seconds) {
