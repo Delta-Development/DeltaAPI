@@ -174,6 +174,7 @@ public class ItemBuilder {
     /**
      * Sets infinity durability on the item by setting the durability to Short.MAX_VALUE.
      */
+    @Deprecated
     public ItemBuilder setInfinityDurability() {
         is.setDurability(Short.MAX_VALUE);
         return this;

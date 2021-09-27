@@ -1,8 +1,8 @@
 package club.deltapvp.deltacore.api;
 
 import club.deltapvp.deltacore.api.commands.ICommand;
-import club.deltapvp.deltacore.api.utilities.file.VersionChecker;
 import club.deltapvp.deltacore.api.utilities.runnable.RunnableSettings;
+import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;

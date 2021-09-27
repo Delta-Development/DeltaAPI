@@ -1,4 +1,4 @@
-package club.deltapvp.deltacore.api.utilities.file;
+package club.deltapvp.deltacore.api.utilities.version;
 
 public interface VersionChecker {
 

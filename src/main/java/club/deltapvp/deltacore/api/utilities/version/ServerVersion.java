@@ -1,4 +1,4 @@
-package club.deltapvp.deltacore.api.utilities.file.enums;
+package club.deltapvp.deltacore.api.utilities.version;
 
 /**
  * Server Version
@@ -7,7 +7,7 @@ package club.deltapvp.deltacore.api.utilities.file.enums;
  * @since July 13th, 2021
  * <p>
  * Server Version is the enum helper for
- * {@link club.deltapvp.deltacore.api.utilities.file.VersionChecker} which
+ * {@link VersionChecker} which
  * checks the version of the server for API reasons.
  */
 public enum ServerVersion {
