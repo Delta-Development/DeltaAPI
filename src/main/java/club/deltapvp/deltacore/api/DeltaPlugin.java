@@ -1,8 +1,8 @@
 package club.deltapvp.deltacore.api;
 
 import club.deltapvp.deltacore.api.commands.ICommand;
-import club.deltapvp.deltacore.api.utilities.file.VersionChecker;
 import club.deltapvp.deltacore.api.utilities.runnable.RunnableSettings;
+import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -28,12 +28,14 @@ public abstract class DeltaPlugin extends JavaPlugin {
     public abstract void onDisable();
 
     public void loadFiles(JavaPlugin plugin, String... names) {
+        File dataFolder = plugin.getDataFolder();
+        DeltaAPI api = DeltaAPI.getInstance();
         Arrays.stream(names).forEach(name -> {
-            File file = new File(plugin.getDataFolder(), name);
+            File file = new File(dataFolder, name);
             FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
 
             if (!file.exists())
-                DeltaAPI.getInstance().getFileLoader().loadFile(plugin, name);
+                api.getFileLoader().loadFile(plugin, name);
 
             try {
                 fileConfig.load(file);
@@ -47,6 +49,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
     }
 
     public void registerCommands(ICommand... commands) {
+        VersionChecker versionChecker = DeltaAPI.getInstance().getVersionChecker();
         Arrays.stream(commands).forEach(iCommand -> {
             try {
                 Server server = Bukkit.getServer();
@@ -59,8 +62,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
                 Command command = commandMap.getCommand(name);
                 if (command != null) {
                     Map<String, Command> map;
-                    VersionChecker checker = DeltaAPI.getInstance().getVersionChecker();
-                    if (checker.isLegacy()) {
+                    if (versionChecker.isLegacy()) {
                         Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
                         commandField.setAccessible(true);
                         map = (Map<String, Command>) commandField.get(commandMap);

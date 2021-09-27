@@ -1,11 +1,10 @@
 package club.deltapvp.deltacore.api.datastructure;
 
 /**
- *
  * @param <T> Type of Data
  * @author Negative
  * @since September 27th, 2021
- *
+ * <p>
  * This data class stored one value which can be changed
  */
 public class StoredData<T> {

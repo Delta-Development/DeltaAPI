@@ -9,6 +9,7 @@ public interface InputListener {
 
     void listen(UUID uuid, BiConsumer<Player, String> function);
 
+    @Deprecated
     void listen(Player player, UUID uuid, BiConsumer<Player, String> function);
 
 }

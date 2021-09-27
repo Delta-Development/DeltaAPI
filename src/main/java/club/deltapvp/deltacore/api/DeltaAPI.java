@@ -3,15 +3,15 @@ package club.deltapvp.deltacore.api;
 import club.deltapvp.deltacore.api.bungeecord.BungeeCord;
 import club.deltapvp.deltacore.api.utilities.checker.UpdateChecker;
 import club.deltapvp.deltacore.api.utilities.file.FileLoader;
-import club.deltapvp.deltacore.api.utilities.file.VersionChecker;
 import club.deltapvp.deltacore.api.utilities.hex.HexValidator;
 import club.deltapvp.deltacore.api.utilities.hologram.HologramManager;
 import club.deltapvp.deltacore.api.utilities.input.InputListener;
-import club.deltapvp.deltacore.api.utilities.message.Message;
+import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import club.deltapvp.deltacore.api.utilities.serialization.BukkitSerializer;
 import club.deltapvp.deltacore.api.utilities.sign.VirtualSignEditor;
 import club.deltapvp.deltacore.api.utilities.skull.CustomSkull;
 import club.deltapvp.deltacore.api.utilities.time.TimeConversion;
+import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +35,7 @@ public abstract class DeltaAPI {
 
     public abstract Message createMessage(List<String> message);
 
+    @Deprecated
     public abstract TimeConversion getTimeConverter();
 
     public abstract UpdateChecker getUpdateChecker();

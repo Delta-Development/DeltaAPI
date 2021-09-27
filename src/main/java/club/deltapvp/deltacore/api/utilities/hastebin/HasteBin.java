@@ -10,10 +10,11 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * HasteBin Utility
+ *
  * @author Fals3
- *
+ * <p>
  * The ability to post text to HasteBin.
- *
+ * <p>
  * *CREDIT TO FALS3*
  */
 public class HasteBin {

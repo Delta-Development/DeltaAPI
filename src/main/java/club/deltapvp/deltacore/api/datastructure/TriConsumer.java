@@ -6,8 +6,8 @@ import java.util.Objects;
  * TriConsumer
  * Primarily meant for BiMap.
  *
- * @param <T> Type
- * @param <U> Value 1
+ * @param <T>  Type
+ * @param <U>  Value 1
  * @param <U1> Value 2
  */
 @FunctionalInterface

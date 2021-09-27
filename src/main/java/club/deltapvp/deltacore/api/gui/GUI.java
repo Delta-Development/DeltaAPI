@@ -1,5 +1,6 @@
 package club.deltapvp.deltacore.api.gui;
 
+import club.deltapvp.deltacore.api.DeltaPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -9,10 +10,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * Custom GUI
@@ -22,7 +26,7 @@ public class GUI {
 
     // Item placement map
     @Getter
-    private final Map<Integer, ItemStack> items;
+    private final Map<Integer, Function<Player, ItemStack>> items;
     // Rows amount (9 * rows)
     @Getter
     private final int rows;
@@ -42,6 +46,8 @@ public class GUI {
     @Getter
     @Setter
     private BiConsumer<Player, InventoryCloseEvent> onClose;
+    @Getter
+    private BukkitTask autoRefreshTask;
 
     /**
      * Constructor for GUI
@@ -60,7 +66,7 @@ public class GUI {
      *
      * @param title          Title
      * @param rows           Number of rows
-     * @param allowTakeItems Allowed to take items from the menu?
+     * @param allowTakeItems Allowed taking items from the menu?
      * @apiNote The title supports color codes automatically!
      */
     public GUI(String title, int rows, boolean allowTakeItems) {
@@ -84,7 +90,7 @@ public class GUI {
 
         items.forEach((index, item) -> {
             try {
-                inv.setItem(index, item);
+                inv.setItem(index, item.apply(player));
             } catch (Exception ignored) {
             }
         });
@@ -96,37 +102,37 @@ public class GUI {
     /**
      * Set Item to a certain index in the GUI
      *
-     * @param index Index/Placement of the Item in the GUI
-     * @param item  ItemStack
+     * @param index        Index/Placement of the Item in the GUI
+     * @param itemFunction ItemStack
      * @apiNote There is no click event linked to this item
      * @apiNote First slot of GUIs are 0
      */
-    public void setItem(int index, ItemStack item) {
-        setItemClickEvent(index, item, null);
+    public void setItem(int index, Function<Player, ItemStack> itemFunction) {
+        setItemClickEvent(index, itemFunction, null);
     }
 
     /**
      * Set Item Click Event to a certain index in the GUI
      *
-     * @param index    Index/Placement of the Item in the GUI
-     * @param item     ItemStack
-     * @param function Click Event of the Item
+     * @param index        Index/Placement of the Item in the GUI
+     * @param itemFunction ItemStack
+     * @param function     Click Event of the Item
      */
-    public void setItemClickEvent(int index, ItemStack item, BiConsumer<Player, InventoryClickEvent> function) {
+    public void setItemClickEvent(int index, Function<Player, ItemStack> itemFunction, BiConsumer<Player, InventoryClickEvent> function) {
         if (function != null)
             clickEvents.put(index, function);
 
-        items.put(index, item);
+        items.put(index, itemFunction);
     }
 
     /**
      * Add Item Click Event to the GUI
      *
-     * @param item     ItemStack
-     * @param function Click Event of the Item
+     * @param itemFunction ItemStack
+     * @param function     Click Event of the Item
      * @apiNote This adds the Item to the next available slot
      */
-    public void addItemClickEvent(ItemStack item, BiConsumer<Player, InventoryClickEvent> function) {
+    public void addItemClickEvent(Function<Player, ItemStack> itemFunction, BiConsumer<Player, InventoryClickEvent> function) {
         int i;
         for (i = 0; i < (9 * rows); i++) {
             if (function != null && !clickEvents.containsKey(i) && !items.containsKey(i))
@@ -136,29 +142,44 @@ public class GUI {
                 break;
 
         }
-        setItemClickEvent(i, item, function);
+        setItemClickEvent(i, itemFunction, function);
     }
 
     /**
      * Add Item to the GUI
      *
-     * @param item ItemStack
+     * @param itemFunction ItemStack
      * @apiNote This adds the Item to the next available slot
      */
-    public void addItem(ItemStack item) {
+    public void addItem(Function<Player, ItemStack> itemFunction) {
         int i;
         for (i = 0; i < (9 * rows); i++) {
             if (!items.containsKey(i))
                 break;
         }
-        setItem(i, item);
+        setItem(i, itemFunction);
     }
 
-    public void refreshItems(Player player) {
-        if (activeInventories.get(player) == null || !(player.getInventory() instanceof BaseGUI))
+    public void refresh(Player player) {
+        if (activeInventories.get(player) == null)
             return;
 
-        items.forEach((slot, item) -> player.getInventory().setItem(slot, item));
+        Inventory inv = activeInventories.get(player);
+        items.forEach((slot, item) -> inv.setItem(slot, item.apply(player)));
+    }
+
+    public void setAutoRefreshInterval(DeltaPlugin plugin, Player player, int seconds) {
+        BukkitTask autoRefreshTask = this.autoRefreshTask;
+        if (autoRefreshTask != null)
+            autoRefreshTask.cancel();
+
+        this.autoRefreshTask = new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                refresh(player);
+            }
+        }.runTaskTimer(plugin, 0, 20L * seconds);
     }
 
 }
