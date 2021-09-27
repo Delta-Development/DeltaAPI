@@ -154,7 +154,7 @@ public class GUI {
         setItem(i, item);
     }
 
-    public void refreshItems(Player player) {
+    public void refresh(Player player) {
         if (activeInventories.get(player) == null || !(player.getInventory() instanceof BaseGUI))
             return;
 
