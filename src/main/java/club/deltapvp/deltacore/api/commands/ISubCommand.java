@@ -2,7 +2,7 @@ package club.deltapvp.deltacore.api.commands;
 
 import club.deltapvp.deltacore.api.DeltaAPI;
 import club.deltapvp.deltacore.api.commands.annotation.CommandInfo;
-import club.deltapvp.deltacore.api.utilities.message.Message;
+import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;

@@ -6,7 +6,7 @@ import club.deltapvp.deltacore.api.utilities.file.FileLoader;
 import club.deltapvp.deltacore.api.utilities.hex.HexValidator;
 import club.deltapvp.deltacore.api.utilities.hologram.HologramManager;
 import club.deltapvp.deltacore.api.utilities.input.InputListener;
-import club.deltapvp.deltacore.api.utilities.message.Message;
+import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import club.deltapvp.deltacore.api.utilities.serialization.BukkitSerializer;
 import club.deltapvp.deltacore.api.utilities.sign.VirtualSignEditor;
 import club.deltapvp.deltacore.api.utilities.skull.CustomSkull;
