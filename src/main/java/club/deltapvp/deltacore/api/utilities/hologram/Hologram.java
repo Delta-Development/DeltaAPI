@@ -7,6 +7,12 @@ import org.bukkit.entity.Player;
 import java.util.LinkedList;
 import java.util.function.BiConsumer;
 
+/**
+ * Hologram
+ *
+ * @author Negative
+ * @since August 28th, 2021
+ */
 public interface Hologram {
 
     String getStringID();

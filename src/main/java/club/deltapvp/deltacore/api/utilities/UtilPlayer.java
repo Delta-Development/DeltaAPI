@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.Collections;
+
 @UtilityClass
 public class UtilPlayer {
 
@@ -35,6 +37,7 @@ public class UtilPlayer {
             player.leaveVehicle();
         if (player.getPassenger() != null)
             player.getPassenger().leaveVehicle();
+
     }
 
     /**
