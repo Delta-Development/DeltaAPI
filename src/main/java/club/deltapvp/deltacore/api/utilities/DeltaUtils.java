@@ -21,6 +21,7 @@ import java.util.List;
 public class DeltaUtils {
 
     private final DecimalFormat df;
+
     static {
         df = new DecimalFormat("###,###,###,###,###,###,###,###.##");
     }

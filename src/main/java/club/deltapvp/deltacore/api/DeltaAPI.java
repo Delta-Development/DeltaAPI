@@ -35,6 +35,7 @@ public abstract class DeltaAPI {
 
     public abstract Message createMessage(List<String> message);
 
+    @Deprecated
     public abstract TimeConversion getTimeConverter();
 
     public abstract UpdateChecker getUpdateChecker();

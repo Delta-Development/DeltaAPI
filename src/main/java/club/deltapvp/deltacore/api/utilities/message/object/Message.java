@@ -14,11 +14,11 @@ import java.util.List;
  * Object based Message class
  *
  * @author Negative
- *
+ * <p>
  * This is the object based message class, meaning you can just do
  * new Message("my message").send(commandSender); without needing to reference
  * {@link club.deltapvp.deltacore.api.DeltaAPI} and create a message.
- *
+ * <p>
  * Although {@link club.deltapvp.deltacore.api.utilities.message.iface.Message} is recommended, but
  * this will be kept up to date!
  */

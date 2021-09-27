@@ -9,10 +9,10 @@ import java.util.List;
  * Interface based Message class
  *
  * @author Negative
- *
+ * <p>
  * This class is an interfaced based version of {@link club.deltapvp.deltacore.api.utilities.message.object.Message}
  * which is an older legacy version of this one.
- *
+ * <p>
  * This one is typically recommended, but both work and will be updated!
  */
 public interface Message {
