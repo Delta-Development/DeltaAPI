@@ -9,7 +9,7 @@ import org.bukkit.event.HandlerList;
  *
  * @author Negative
  * @since September 19th, 2021
- *
+ * <p>
  * DeltaEvent is an extension off of {@link Event}
  * which does not require you to add the Handlers to your class
  * every time you make a new event, and also has a built-in call method
