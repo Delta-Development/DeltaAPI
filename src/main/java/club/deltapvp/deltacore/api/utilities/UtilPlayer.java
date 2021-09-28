@@ -60,4 +60,14 @@ public class UtilPlayer {
         return x >= x1 && x <= x2 && y >= y1 && y <= y2 && z >= z1 && z <= z2;
     }
 
+    /**
+     * Checks if a provided player's inventory is full
+     *
+     * @param player Player
+     * @return Returns true if the player's inventory is full, returns false if it is not.
+     */
+    public boolean isInventoryFull(Player player) {
+        return player.getInventory().firstEmpty() == -1;
+    }
+
 }

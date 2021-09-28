@@ -1,7 +1,6 @@
 package club.deltapvp.deltacore.api.utilities.message.file;
 
 import club.deltapvp.deltacore.api.DeltaPlugin;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -34,6 +33,7 @@ public class MessageConfiguration {
             config.save(file);
         }
     }
+
     @SneakyThrows
     public void save() {
         config.save(file);
