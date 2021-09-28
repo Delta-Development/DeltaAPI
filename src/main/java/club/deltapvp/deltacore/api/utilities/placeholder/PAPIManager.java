@@ -12,6 +12,6 @@ public abstract class PAPIManager {
 
     public abstract void registerPlaceholder(DeltaPlugin plugin, PAPIPlaceholder... placeholders);
 
-    public abstract String request(Player player, String[] params);
+    public abstract String request(DeltaPlugin plugin, Player player, String[] params);
 
 }
