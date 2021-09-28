@@ -3,8 +3,10 @@ package club.deltapvp.deltacore.api.utilities;
 import club.deltapvp.deltacore.api.utilities.hastebin.HasteBin;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -117,6 +119,79 @@ public class DeltaUtils {
         List<String> returnValue = new ArrayList<>();
         input.forEach(s -> returnValue.add(color(s)));
         return returnValue;
+    }
+
+    /**
+     * Checks if a provided plugin name is enabled
+     * @param name Plugin Name
+     * @return Returns true if the plugin is enabled
+     */
+    public boolean hasPlugin(String name) {
+        return Bukkit.getPluginManager().isPluginEnabled(name);
+    }
+
+    /**
+     * Registers all PlaceholderAPI placeholders for your message
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
+     *
+     * @param player Player
+     * @param input Input
+     * @return Formatted Input Text
+     */
+    public String registerPlaceholders(Player player, String input) {
+        if (!hasPlugin("PlaceholderAPI"))
+            return input;
+
+        return PlaceholderAPI.setPlaceholders(player, input);
+    }
+
+    /**
+     * Registers all PlaceholderAPI placeholders for your message
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
+     *
+     * @param player OfflinePlayer
+     * @param input Input
+     * @return Formatted Input Text
+     */
+    public String registerPlaceholders(OfflinePlayer player, String input) {
+        if (!hasPlugin("PlaceholderAPI"))
+            return input;
+
+        return PlaceholderAPI.setPlaceholders(player, input);
+    }
+
+    /**
+     * Registers all PlaceholderAPI placeholders for your message
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
+     *
+     * @param player Player
+     * @param input Input
+     * @return Formatted Input Text
+     */
+    public List<String>  registerPlaceholders(Player player, List<String> input) {
+        if (!hasPlugin("PlaceholderAPI"))
+            return input;
+
+        return PlaceholderAPI.setPlaceholders(player, input);
+    }
+
+    /**
+     * Registers all PlaceholderAPI placeholders for your message
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
+     *
+     * @param player OfflinePlayer
+     * @param input Input
+     * @return Formatted Input Text
+     */
+    public List<String>  registerPlaceholders(OfflinePlayer player, List<String> input) {
+        if (!hasPlugin("PlaceholderAPI"))
+            return input;
+
+        return PlaceholderAPI.setPlaceholders(player, input);
     }
 
 }
