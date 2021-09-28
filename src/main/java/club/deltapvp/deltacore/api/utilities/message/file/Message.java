@@ -1,10 +1,8 @@
-package club.deltapvp.deltacore.api.utilities.message.prototype;
+package club.deltapvp.deltacore.api.utilities.message.file;
 
 import club.deltapvp.deltacore.api.DeltaPlugin;
 import club.deltapvp.deltacore.api.utilities.DeltaUtils;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -36,15 +34,12 @@ import java.util.List;
 public class Message {
 
     private final String id;
-    private final String[] defaultValues;
     private final MessageConfiguration configuration;
     private final LinkedList<String> defaultContent;
-    @Setter @Getter
     private List<String> modifiableContent = new ArrayList<>();
 
     public Message(DeltaPlugin plugin, String id, String... defaultValues) {
         this.id = id;
-        this.defaultValues = defaultValues;
 
         configuration = new MessageConfiguration(plugin, id, defaultValues);
         defaultContent = new LinkedList<>();
@@ -83,5 +78,20 @@ public class Message {
 
     private String t(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    public void reload() {
+        configuration.reload();
+        defaultContent.clear();
+        defaultContent.addAll(configuration.getConfig().getStringList("content"));
+        reset();
+    }
+
+    private void setModifiableContent(List<String> modifiableContent) {
+        this.modifiableContent = modifiableContent;
+    }
+
+    private List<String> getModifiableContent() {
+        return modifiableContent;
     }
 }

@@ -1,4 +1,4 @@
-package club.deltapvp.deltacore.api.utilities.message.prototype;
+package club.deltapvp.deltacore.api.utilities.message.file;
 
 import club.deltapvp.deltacore.api.DeltaPlugin;
 import lombok.experimental.UtilityClass;
