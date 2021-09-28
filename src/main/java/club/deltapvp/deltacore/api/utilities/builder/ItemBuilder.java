@@ -183,7 +183,7 @@ public class ItemBuilder {
 
     public ItemBuilder setUnbreakable(boolean value) {
         APIItemBuilder api = APIItemBuilder.getInstance();
-        api.getVersionItemBuilder().setUnbreakable(value);
+        api.getVersionItemBuilder().setUnbreakable(is, value);
         return this;
     }
 
