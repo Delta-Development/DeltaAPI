@@ -10,12 +10,12 @@ import org.bukkit.entity.Player;
  *
  * @author Negative
  * @since September 28th, 2021
- *
+ * <p>
  * This is the debug Object which will be used to send debug
  * messages to players or console.
- *
+ * <p>
  * If the plugin's debug state is false, it will not send a message.
- *
+ * <p>
  * Register your plugin in your onEnable method. {@link DebugManager}
  */
 @Data

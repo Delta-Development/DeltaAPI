@@ -11,6 +11,7 @@ public class UtilPlayer {
 
     /**
      * Resets the player to default stats
+     *
      * @param player Player
      */
     public void reset(Player player) {
@@ -61,6 +62,7 @@ public class UtilPlayer {
 
     /**
      * Checks if a provided player's inventory is full
+     *
      * @param player Player
      * @return Returns true if the player's inventory is full, returns false if it is not.
      */

@@ -5,7 +5,8 @@ import lombok.Setter;
 
 public abstract class APIItemBuilder {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static APIItemBuilder instance;
 
     public abstract AbstractVersionItemBuilder getVersionItemBuilder();

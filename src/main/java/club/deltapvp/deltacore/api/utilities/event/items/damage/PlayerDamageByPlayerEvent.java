@@ -13,13 +13,14 @@ import org.bukkit.event.entity.EntityDamageEvent;
  *
  * @author Negative
  * @since September 28th, 2021
- *
+ * <p>
  * This event is similar to {@link EntityDamageByEntityEvent} and {@link PlayerDamageByEntityEvent}
  * but it only applies to players so developers do not need to make specific checks to see if a player is being
  * damaged by another player and not any other entity.
  */
 @RequiredArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class PlayerDamageByPlayerEvent extends DeltaEvent {
 
     private final Player player;

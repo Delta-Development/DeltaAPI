@@ -9,14 +9,14 @@ import org.bukkit.configuration.file.FileConfiguration;
  *
  * @author Negative
  * @since September 28th, 2021
- *
+ * <p>
  * Debug Manager is a manager for the {@link Debug} system.
  * Developers can register their plugin to the debugger, and it will create or add
  * to the debug.yml file with their plugin name and a value.
- *
+ * <p>
  * True meaning debugging for that plugin is enabled, False meaning
  * debugging is false for that plugin
- *
+ * <p>
  * Although the code is kind of dirt, I might improve this at a later date.
  */
 @UtilityClass

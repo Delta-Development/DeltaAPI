@@ -7,7 +7,8 @@ import org.bukkit.entity.Player;
 
 public abstract class PAPIManager {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static PAPIManager instance;
 
     public abstract void registerPlaceholder(DeltaPlugin plugin, PAPIPlaceholder... placeholders);

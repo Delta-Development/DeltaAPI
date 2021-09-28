@@ -31,8 +31,9 @@ public class DeltaUtils {
 
     /**
      * Post/Upload text to HasteBin
+     *
      * @param text The text you want to be uploaded
-     * @param raw Will the text be raw?
+     * @param raw  Will the text be raw?
      * @return HasteBin link
      */
     @SneakyThrows
@@ -42,6 +43,7 @@ public class DeltaUtils {
 
     /**
      * Takes an Integer and turns it into a fancy string
+     *
      * @param i Input
      * @return Output (Fancy String!)
      */
@@ -51,6 +53,7 @@ public class DeltaUtils {
 
     /**
      * Takes a Double and turns it into a fancy string
+     *
      * @param i Input
      * @return Output (Fancy String!)
      */
@@ -60,6 +63,7 @@ public class DeltaUtils {
 
     /**
      * Takes a Float and turns it into a fancy string
+     *
      * @param i Input
      * @return Output (Fancy String!)
      */
@@ -69,6 +73,7 @@ public class DeltaUtils {
 
     /**
      * Takes an Object and turns it into a fancy string
+     *
      * @param i Input
      * @return Output (Fancy String!)
      */
@@ -78,6 +83,7 @@ public class DeltaUtils {
 
     /**
      * Get all online players in a List format
+     *
      * @return Returns all online players
      */
     public List<Player> getOnlinePlayers() {
@@ -87,6 +93,7 @@ public class DeltaUtils {
 
     /**
      * Executes a command as the Console
+     *
      * @param command Command input
      */
     public void executeConsoleCommand(String command) {
@@ -95,6 +102,7 @@ public class DeltaUtils {
 
     /**
      * Broadcast a message to the server
+     *
      * @param message Message input
      */
     public void broadcast(String message) {
@@ -103,6 +111,7 @@ public class DeltaUtils {
 
     /**
      * Colorize a String
+     *
      * @param input Input String
      * @return Chat Color formatted String
      */
@@ -112,6 +121,7 @@ public class DeltaUtils {
 
     /**
      * Colorize a List of Strings
+     *
      * @param input Input StringList
      * @return Chat Color formatted List of Strings
      */
@@ -123,6 +133,7 @@ public class DeltaUtils {
 
     /**
      * Checks if a provided plugin name is enabled
+     *
      * @param name Plugin Name
      * @return Returns true if the plugin is enabled
      */
@@ -132,12 +143,12 @@ public class DeltaUtils {
 
     /**
      * Registers all PlaceholderAPI placeholders for your message
-     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
-     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      *
      * @param player Player
-     * @param input Input
+     * @param input  Input
      * @return Formatted Input Text
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      */
     public String registerPlaceholders(Player player, String input) {
         if (!hasPlugin("PlaceholderAPI"))
@@ -148,12 +159,12 @@ public class DeltaUtils {
 
     /**
      * Registers all PlaceholderAPI placeholders for your message
-     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
-     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      *
      * @param player OfflinePlayer
-     * @param input Input
+     * @param input  Input
      * @return Formatted Input Text
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      */
     public String registerPlaceholders(OfflinePlayer player, String input) {
         if (!hasPlugin("PlaceholderAPI"))
@@ -164,14 +175,14 @@ public class DeltaUtils {
 
     /**
      * Registers all PlaceholderAPI placeholders for your message
-     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
-     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      *
      * @param player Player
-     * @param input Input
+     * @param input  Input
      * @return Formatted Input Text
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      */
-    public List<String>  registerPlaceholders(Player player, List<String> input) {
+    public List<String> registerPlaceholders(Player player, List<String> input) {
         if (!hasPlugin("PlaceholderAPI"))
             return input;
 
@@ -180,14 +191,14 @@ public class DeltaUtils {
 
     /**
      * Registers all PlaceholderAPI placeholders for your message
-     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
-     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      *
      * @param player OfflinePlayer
-     * @param input Input
+     * @param input  Input
      * @return Formatted Input Text
+     * @apiNote THIS REQUIRES PLACEHOLDERAPI ON YOUR SERVER,
+     * MAKE SURE YOU ADD SOFTDEPEND OR DEPEND IN YOUR PLUGIN.YML
      */
-    public List<String>  registerPlaceholders(OfflinePlayer player, List<String> input) {
+    public List<String> registerPlaceholders(OfflinePlayer player, List<String> input) {
         if (!hasPlugin("PlaceholderAPI"))
             return input;
 

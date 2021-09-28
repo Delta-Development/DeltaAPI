@@ -12,11 +12,11 @@ import java.io.File;
  *
  * @author Negative
  * @since September 28th, 2021
- *
+ * <p>
  * This is the configuration for {@link Debug} and {@link DebugManager} and when a new instance
  * of this class is called it will check to see if the file "debug.yml" exists, if not, create a new
  * file.
- *
+ * <p>
  * The file is where the debug data for each registered plugin is stored.
  */
 public class DebugConfiguration {
