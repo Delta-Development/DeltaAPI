@@ -11,7 +11,6 @@ public class UtilPlayer {
 
     /**
      * Resets the player to default stats
-     *
      * @param player Player
      */
     public void reset(Player player) {
@@ -58,6 +57,15 @@ public class UtilPlayer {
         int z2 = Math.max(l1.getBlockZ(), l2.getBlockZ());
 
         return x >= x1 && x <= x2 && y >= y1 && y <= y2 && z >= z1 && z <= z2;
+    }
+
+    /**
+     * Checks if a provided player's inventory is full
+     * @param player Player
+     * @return Returns true if the player's inventory is full, returns false if it is not.
+     */
+    public boolean isInventoryFull(Player player) {
+        return player.getInventory().firstEmpty() == -1;
     }
 
 }

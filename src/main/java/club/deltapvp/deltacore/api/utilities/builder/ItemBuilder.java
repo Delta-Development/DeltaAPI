@@ -1,6 +1,7 @@
 package club.deltapvp.deltacore.api.utilities.builder;
 
 import club.deltapvp.deltacore.api.DeltaAPI;
+import club.deltapvp.deltacore.api.utilities.builder.itembuilder.APIItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
@@ -177,6 +178,12 @@ public class ItemBuilder {
     @Deprecated
     public ItemBuilder setInfinityDurability() {
         is.setDurability(Short.MAX_VALUE);
+        return this;
+    }
+
+    public ItemBuilder setUnbreakable(boolean value) {
+        APIItemBuilder api = APIItemBuilder.getInstance();
+        api.getVersionItemBuilder().setUnbreakable(value);
         return this;
     }
 
