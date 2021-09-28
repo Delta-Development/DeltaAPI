@@ -52,4 +52,8 @@ public class DeltaUtils {
         return new ArrayList<>(collect);
     }
 
+    public void executeConsoleCommand(String command) {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
+
 }
