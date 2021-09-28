@@ -4,6 +4,7 @@ import club.deltapvp.deltacore.api.utilities.hastebin.HasteBin;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -54,6 +55,10 @@ public class DeltaUtils {
 
     public void executeConsoleCommand(String command) {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
+
+    public void broadcast(String message) {
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 
 }

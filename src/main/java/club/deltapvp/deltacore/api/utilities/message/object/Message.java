@@ -1,5 +1,6 @@
 package club.deltapvp.deltacore.api.utilities.message.object;
 
+import club.deltapvp.deltacore.api.utilities.DeltaUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -53,8 +54,7 @@ public class Message {
      */
     public Message replace(Object o1, Object o2) {
         if (o2 instanceof Integer || o2 instanceof Double || o2 instanceof Long) {
-            DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,###,###.##");
-            o2 = df.format(o2);
+            o2 = DeltaUtils.decimalFormat(o2);
         }
 
         String newMSG = this.message;
