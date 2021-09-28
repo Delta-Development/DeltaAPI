@@ -15,20 +15,19 @@ import java.util.List;
  *
  * @author Negative
  * @since September 28th, 2021
- *
+ * <p>
  * This is a prototype for a new message system which allows a plugin to have a
  * configurable message system without the need for developers to put in the extra
  * effort to make said messages configurable.
- *
+ * <p>
  * All messages created in the plugin using this will have a file with its ID created under
  * the messages folder
- *
+ * <p>
  * Example:
  * no-permission.yml
- *
+ * <p>
  * That yaml file will contain a StringList of the message, which can be modified by the
  * server owner
- *
  */
 @Data
 public class Message {
@@ -87,11 +86,11 @@ public class Message {
         reset();
     }
 
-    private void setModifiableContent(List<String> modifiableContent) {
-        this.modifiableContent = modifiableContent;
-    }
-
     private List<String> getModifiableContent() {
         return modifiableContent;
+    }
+
+    private void setModifiableContent(List<String> modifiableContent) {
+        this.modifiableContent = modifiableContent;
     }
 }
