@@ -165,7 +165,11 @@ public class GUI {
             return;
 
         Inventory inv = activeInventories.get(player);
-        items.forEach((slot, item) -> inv.setItem(slot, item.apply(player)));
+        items.forEach((slot, item) -> {
+            try {
+                inv.setItem(slot, item.apply(player));
+            } catch (Exception ignored) {}
+        });
     }
 
     public void setAutoRefreshInterval(DeltaPlugin plugin, Player player, int seconds) {
