@@ -12,4 +12,9 @@ public abstract class AbstractHologramHandler {
 
     public abstract Location location();
 
+    public abstract void load();
+
+    public abstract void remove();
+
+
 }
