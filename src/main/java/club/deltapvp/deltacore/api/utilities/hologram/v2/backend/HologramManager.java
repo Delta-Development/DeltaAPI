@@ -17,5 +17,5 @@ public abstract class HologramManager {
 
     public abstract void removeHologram(Hologram hologram);
 
-    public abstract List<Hologram> getHolograms();
+    public abstract List<Hologram> getHolograms(DeltaPlugin plugin);
 }
