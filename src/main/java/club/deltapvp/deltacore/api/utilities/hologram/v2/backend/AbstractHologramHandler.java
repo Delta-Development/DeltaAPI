@@ -1,20 +1,18 @@
 package club.deltapvp.deltacore.api.utilities.hologram.v2.backend;
 
+import club.deltapvp.deltacore.api.DeltaPlugin;
+import club.deltapvp.deltacore.api.utilities.hologram.v2.Hologram;
 import org.bukkit.Location;
 
 import java.util.List;
 
 public abstract class AbstractHologramHandler {
 
-    public abstract String handle();
+    public abstract void create(Hologram hologram);
 
-    public abstract List<String> lines();
+    public abstract void remove(Hologram hologram);
 
-    public abstract Location location();
-
-    public abstract void load();
-
-    public abstract void remove();
+    public abstract void update(Hologram hologram);
 
 
 }
