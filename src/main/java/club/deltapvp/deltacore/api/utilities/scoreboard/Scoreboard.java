@@ -71,11 +71,11 @@ public abstract class Scoreboard {
         final Objective objective = (score.getObjective(player.getName()) == null) ?
                 score.registerNewObjective(player.getName(), "dummy") : score.getObjective(player.getName());
 
-        for (int i = 0; i < apply.size(); i++) {
-            String line = apply.get(0);
-            int pos = (i + 1);
-            replaceScore(objective, pos, DeltaUtils.colorWithPlaceholders(player, line));
+        for (String line : apply) {
+            int index = apply.indexOf(line);
+            replaceScore(objective, index, DeltaUtils.colorWithPlaceholders(player, line));
         }
+
         if (objective.getDisplaySlot() != DisplaySlot.SIDEBAR) {
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         }
