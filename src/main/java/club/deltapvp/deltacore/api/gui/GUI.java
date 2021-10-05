@@ -168,7 +168,8 @@ public class GUI {
         items.forEach((slot, item) -> {
             try {
                 inv.setItem(slot, item.apply(player));
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         });
     }
 

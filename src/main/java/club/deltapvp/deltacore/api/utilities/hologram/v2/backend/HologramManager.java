@@ -10,7 +10,8 @@ import java.util.List;
 
 public abstract class HologramManager {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static HologramManager instance;
 
     public abstract void registerHologram(DeltaPlugin plugin, Hologram hologram);
