@@ -9,7 +9,8 @@ import java.util.List;
 
 public abstract class ScoreboardManager {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static ScoreboardManager instance;
 
     public abstract void registerScoreboard(DeltaPlugin plugin, Scoreboard scoreboard);
