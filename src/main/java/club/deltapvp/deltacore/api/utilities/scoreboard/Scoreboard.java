@@ -1,6 +1,8 @@
 package club.deltapvp.deltacore.api.utilities.scoreboard;
 
 import club.deltapvp.deltacore.api.utilities.DeltaUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -11,19 +13,14 @@ import java.util.function.Function;
 
 public abstract class Scoreboard {
 
+    @Getter @Setter
     private Function<Player, List<String>> scoreboardLines;
+    @Getter @Setter
+    private Function<Player, String> scoreboardTitle;
 
     public abstract String handle();
 
     public abstract int priority();
-
-    public Function<Player, List<String>> getScoreboardLines() {
-        return scoreboardLines;
-    }
-
-    public void setScoreboardLines(Function<Player, List<String>> function) {
-        this.scoreboardLines = function;
-    }
 
     private String getEntryFromScore(final Objective o, final int score) {
         if (o == null) {
