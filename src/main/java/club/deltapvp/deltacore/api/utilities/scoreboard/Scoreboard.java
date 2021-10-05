@@ -78,7 +78,7 @@ public abstract class Scoreboard {
 
         for (String line : apply) {
             int index = apply.indexOf(line);
-            replaceScore(objective, index, DeltaUtils.colorWithPlaceholders(player, line));
+            replaceScore(objective, (index + 1), DeltaUtils.colorWithPlaceholders(player, line));
         }
 
         if (objective.getDisplaySlot() != DisplaySlot.SIDEBAR) {
