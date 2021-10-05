@@ -63,6 +63,11 @@ public abstract class Scoreboard {
 
     public void display(Player player) {
         List<String> apply = scoreboardLines.apply(player);
+        if (apply == null) {
+            player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+            return;
+        }
+
         Collections.reverse(apply);
 
         org.bukkit.scoreboard.Scoreboard score = player.getScoreboard();
