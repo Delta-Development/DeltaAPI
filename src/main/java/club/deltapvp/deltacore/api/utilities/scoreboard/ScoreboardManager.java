@@ -30,7 +30,7 @@ public abstract class ScoreboardManager {
 
     public abstract void updateScoreboard(Player player);
 
-    public abstract Scoreboard getScoreboard(Player player);
+    public abstract Optional<Scoreboard> getScoreboard(Player player);
 
     public abstract Optional<Scoreboard> getScoreboardByHandle(String input);
 
