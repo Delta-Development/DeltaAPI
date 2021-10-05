@@ -27,6 +27,8 @@ public abstract class ScoreboardManager {
 
     public abstract void removeAllScoreboards();
 
+    public abstract void updateScoreboard(Player player);
+
     public abstract Scoreboard getScoreboard(Player player);
 
     public abstract List<Scoreboard> getScoreboards(DeltaPlugin plugin);
