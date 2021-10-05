@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class ScoreboardManager {
 
@@ -30,6 +31,8 @@ public abstract class ScoreboardManager {
     public abstract void updateScoreboard(Player player);
 
     public abstract Scoreboard getScoreboard(Player player);
+
+    public abstract Optional<Scoreboard> getScoreboardByHandle(String input);
 
     public abstract List<Scoreboard> getScoreboards(DeltaPlugin plugin);
 }
