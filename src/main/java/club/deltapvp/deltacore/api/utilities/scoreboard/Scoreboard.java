@@ -3,6 +3,7 @@ package club.deltapvp.deltacore.api.utilities.scoreboard;
 import club.deltapvp.deltacore.api.utilities.DeltaUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -66,6 +67,10 @@ public abstract class Scoreboard {
         }
 
         Collections.reverse(apply);
+
+        if (player.getScoreboard().equals(Bukkit.getServer().getScoreboardManager().getMainScoreboard())) {
+            player.setScoreboard(Bukkit.getServer().getScoreboardManager().getNewScoreboard());
+        }
 
         org.bukkit.scoreboard.Scoreboard score = player.getScoreboard();
         final Objective objective = (score.getObjective(player.getName()) == null) ?
