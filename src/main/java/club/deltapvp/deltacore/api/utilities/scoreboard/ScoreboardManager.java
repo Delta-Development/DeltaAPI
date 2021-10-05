@@ -26,7 +26,7 @@ public abstract class ScoreboardManager {
 
     public abstract void removeScoreboard(Player player, String handle);
 
-    public abstract void removeAllScoreboards();
+    public abstract void removeAllScoreboards(Player player);
 
     public abstract void updateScoreboard(Player player);
 
