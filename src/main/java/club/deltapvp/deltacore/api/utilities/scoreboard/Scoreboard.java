@@ -74,7 +74,9 @@ public abstract class Scoreboard {
 
         org.bukkit.scoreboard.Scoreboard score = player.getScoreboard();
         final Objective objective = (score.getObjective(player.getName()) == null) ?
-                score.registerNewObjective(player.getName(), "dummy") : score.getObjective(player.getName());
+                score.registerNewObjective(player.getName(), "delta") : score.getObjective(player.getName());
+
+        objective.setDisplayName(DeltaUtils.colorWithPlaceholders(player, scoreboardTitle.apply(player)));
 
         for (String line : apply) {
             int index = apply.indexOf(line);
