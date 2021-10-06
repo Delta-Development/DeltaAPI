@@ -205,4 +205,18 @@ public class DeltaUtils {
         return PlaceholderAPI.setPlaceholders(player, input);
     }
 
+    /**
+     * Colorize a String
+     *
+     * @param input Input String
+     * @return Chat Color formatted String
+     */
+    public String colorWithPlaceholders(Player player, String input) {
+        if (!hasPlugin("PlaceholderAPI"))
+            return color(input);
+
+        return color(PlaceholderAPI.setPlaceholders(player, input));
+    }
+
+
 }
