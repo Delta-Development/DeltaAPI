@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * TriConsumer
- * Primarily meant for BiMap.
+ * Primarily meant for {@link BiMap}.
  *
  * @param <T>  Type
  * @param <U>  Value 1

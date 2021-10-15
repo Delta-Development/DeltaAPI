@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
  * Text Component Utility
  *
  * @author Negative
- * June 2021
+ * @since June 2021
  */
 public class TextComponentUtil {
 

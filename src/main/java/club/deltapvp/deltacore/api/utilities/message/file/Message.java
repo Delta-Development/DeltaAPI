@@ -3,7 +3,6 @@ package club.deltapvp.deltacore.api.utilities.message.file;
 import club.deltapvp.deltacore.api.DeltaPlugin;
 import club.deltapvp.deltacore.api.utilities.DeltaUtils;
 import lombok.Data;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -11,12 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Prototype Message Utility
+ * File Based Message Utility
  *
  * @author Negative
  * @since September 28th, 2021
  * <p>
- * This is a prototype for a new message system which allows a plugin to have a
+ * This is a message system which allows a plugin to have a
  * configurable message system without the need for developers to put in the extra
  * effort to make said messages configurable.
  * <p>
@@ -37,6 +36,13 @@ public class Message {
     private final LinkedList<String> defaultContent;
     private List<String> modifiableContent = new ArrayList<>();
 
+    /**
+     * Initialize the message and any default values
+     *
+     * @param plugin        Plugin instance
+     * @param id            ID of the Message which will be used to identify and/or create its YAML file.
+     * @param defaultValues Any default values to be printed in the YAML on creation
+     */
     public Message(DeltaPlugin plugin, String id, String... defaultValues) {
         this.id = id;
 
@@ -49,6 +55,13 @@ public class Message {
         MessageManager.registerMessage(plugin, this);
     }
 
+    /**
+     * Replaces {@param s} with {@param s1} in the entire message
+     *
+     * @param s  Value to be replaced
+     * @param s1 Replaced value
+     * @return Continuation of {@link Message}
+     */
     public Message replace(String s, String s1) {
         List<String> currentContent = getModifiableContent();
         List<String> modifiedContent = new ArrayList<>();
@@ -60,25 +73,37 @@ public class Message {
         return this;
     }
 
+    /**
+     * Sends the message to a {@link CommandSender}.
+     * This can either be a {@link org.bukkit.entity.Player} or a
+     * {@link org.bukkit.command.ConsoleCommandSender}.
+     *
+     * @param sender Command Sender
+     */
     public void send(CommandSender sender) {
-        modifiableContent.forEach(s -> sender.sendMessage(t(s)));
+        modifiableContent.forEach(s -> sender.sendMessage(DeltaUtils.color(s)));
         reset();
     }
 
+    /**
+     * Broadcasts the message to the entire server.
+     */
     public void broadcast() {
         modifiableContent.forEach(DeltaUtils::broadcast);
         reset();
     }
 
+    /**
+     * Resets the modifiable content
+     */
     private void reset() {
         modifiableContent.clear();
         modifiableContent.addAll(defaultContent);
     }
 
-    private String t(String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
-    }
-
+    /**
+     * Reloads the message and resets the modifiable content
+     */
     public void reload() {
         configuration.reload();
         defaultContent.clear();
@@ -86,10 +111,20 @@ public class Message {
         reset();
     }
 
+    /**
+     * Gets the modifiable content for... modifying use
+     *
+     * @return List of Strings
+     */
     private List<String> getModifiableContent() {
         return modifiableContent;
     }
 
+    /**
+     * Sets the modifiable content
+     *
+     * @param modifiableContent List of Strings
+     */
     private void setModifiableContent(List<String> modifiableContent) {
         this.modifiableContent = modifiableContent;
     }

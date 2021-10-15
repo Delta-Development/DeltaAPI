@@ -18,10 +18,13 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+
 /**
  * Custom GUI
+ *
+ * @author Negative
+ * @since May 24th, 2021
  */
-
 public class GUI {
 
     // Item placement map
@@ -103,7 +106,7 @@ public class GUI {
      * Set Item to a certain index in the GUI
      *
      * @param index        Index/Placement of the Item in the GUI
-     * @param itemFunction ItemStack
+     * @param itemFunction ItemStack Function
      * @apiNote There is no click event linked to this item
      * @apiNote First slot of GUIs are 0
      */
@@ -160,6 +163,11 @@ public class GUI {
         setItem(i, itemFunction);
     }
 
+    /**
+     * Refreshes the menu for the provided player
+     *
+     * @param player Player
+     */
     public void refresh(Player player) {
         if (activeInventories.get(player) == null)
             return;
@@ -173,6 +181,16 @@ public class GUI {
         });
     }
 
+    /**
+     * Sets the automatic refresh task interval to the provided time
+     * in seconds.
+     * <p>
+     * Once the menu is closed, the task will be deleted.
+     *
+     * @param plugin  Plugin instance
+     * @param player  Player
+     * @param seconds Time in seconds
+     */
     public void setAutoRefreshInterval(DeltaPlugin plugin, Player player, int seconds) {
         BukkitTask autoRefreshTask = this.autoRefreshTask;
         if (autoRefreshTask != null)

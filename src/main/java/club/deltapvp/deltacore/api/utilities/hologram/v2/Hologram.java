@@ -5,6 +5,12 @@ import org.bukkit.Location;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Packet Based Hologram
+ *
+ * @author Negative
+ * @since October 5th, 2021
+ */
 public abstract class Hologram {
 
     private Consumer<HologramInteractEvent> hologramInteractEventConsumer;

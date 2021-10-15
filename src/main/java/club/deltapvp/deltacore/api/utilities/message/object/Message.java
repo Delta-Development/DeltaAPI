@@ -3,8 +3,6 @@ package club.deltapvp.deltacore.api.utilities.message.object;
 import club.deltapvp.deltacore.api.utilities.DeltaUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -76,12 +74,12 @@ public class Message {
         if (this.message.contains("\n")) {
             String[] msg = getMessage().split("\n");
             for (String s : msg) {
-                sender.sendMessage(translate(s));
+                sender.sendMessage(DeltaUtils.color(s));
             }
             this.message = initial;
             return;
         }
-        sender.sendMessage(translate(getMessage()));
+        sender.sendMessage(DeltaUtils.color(getMessage()));
         setMessage(getInitial());
     }
 
@@ -106,16 +104,13 @@ public class Message {
         if (getMessage().contains("\n")) {
             String[] msg = getMessage().split("\n");
             for (String s : msg) {
-                Bukkit.broadcastMessage(translate(s));
+                DeltaUtils.broadcast(getMessage());
             }
             setMessage(getInitial());
             return;
         }
-        Bukkit.broadcastMessage(translate(getMessage()));
+        DeltaUtils.broadcast(getMessage());
         setMessage(getInitial());
     }
 
-    private String translate(String input) {
-        return ChatColor.translateAlternateColorCodes('&', input);
-    }
 }

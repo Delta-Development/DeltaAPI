@@ -17,6 +17,15 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * DeltaAPI
+ *
+ * @author Negative
+ * @since August 25th, 2021
+ * <p>
+ * This class is one of the main points of access for any plugin to access
+ * some features of the entire framework.
+ */
 public abstract class DeltaAPI {
 
     @Getter
@@ -35,6 +44,9 @@ public abstract class DeltaAPI {
 
     public abstract Message createMessage(List<String> message);
 
+    /**
+     * @deprecated Use {@link club.deltapvp.deltacore.api.utilities.time.TimeUtil}
+     */
     @Deprecated
     public abstract TimeConversion getTimeConverter();
 

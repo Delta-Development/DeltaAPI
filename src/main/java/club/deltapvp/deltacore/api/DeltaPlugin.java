@@ -19,6 +19,18 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * DeltaPlugin
+ * <p>
+ * An extension off of {@link JavaPlugin} which can be used rather than
+ * using {@link JavaPlugin} which also provide some useful methods that
+ * allow you to register commands without the need of plugin.yml, the ability
+ * to register any {@link BukkitRunnable} that annotates {@link RunnableSettings} for
+ * quality of life. And more!
+ *
+ * @author Negative
+ * @since August 18th, 2021
+ */
 public abstract class DeltaPlugin extends JavaPlugin {
 
     @Override
@@ -27,6 +39,12 @@ public abstract class DeltaPlugin extends JavaPlugin {
     @Override
     public abstract void onDisable();
 
+    /**
+     * Load custom files with pre-written data.
+     *
+     * @param plugin Plugin instance
+     * @param names  File names
+     */
     public void loadFiles(JavaPlugin plugin, String... names) {
         File dataFolder = plugin.getDataFolder();
         DeltaAPI api = DeltaAPI.getInstance();
@@ -48,6 +66,11 @@ public abstract class DeltaPlugin extends JavaPlugin {
 
     }
 
+    /**
+     * Registers Commands without the use of plugin.yml
+     *
+     * @param commands Commands
+     */
     public void registerCommands(ICommand... commands) {
         VersionChecker versionChecker = DeltaAPI.getInstance().getVersionChecker();
         Arrays.stream(commands).forEach(iCommand -> {
@@ -81,11 +104,22 @@ public abstract class DeltaPlugin extends JavaPlugin {
         });
     }
 
+    /**
+     * Registers Listener classes
+     *
+     * @param listeners Listeners
+     */
     public void registerListeners(Listener... listeners) {
         PluginManager pluginManager = Bukkit.getPluginManager();
         Arrays.stream(listeners).forEach(listener -> pluginManager.registerEvents(listener, this));
     }
 
+    /**
+     * Register {@link BukkitRunnable} classes to the server
+     * which annotate {@link RunnableSettings}.
+     *
+     * @param runnables Runnables
+     */
     public void registerRunnables(BukkitRunnable... runnables) {
         Arrays.stream(runnables).filter(runnable -> runnable.getClass().isAnnotationPresent(RunnableSettings.class))
                 .forEach(runnable -> {
