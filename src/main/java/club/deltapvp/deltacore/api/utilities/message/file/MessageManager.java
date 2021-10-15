@@ -7,11 +7,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
+/**
+ * Message Manager
+ *
+ * @author Negative
+ * @since September 28th, 2021
+ * <p>
+ * Management class for {@link Message}
+ * <p>
+ * This class will manage all the messages registered by plugins
+ */
 @UtilityClass
 public class MessageManager {
 
+
     private final HashMap<DeltaPlugin, ArrayList<Message>> registeredMessages = new HashMap<>();
 
+    /**
+     * Registers the Message to be put in a cache
+     *
+     * @param plugin  Plugin instance
+     * @param message Message instance
+     */
     public void registerMessage(DeltaPlugin plugin, Message message) {
         ArrayList<Message> messages = registeredMessages.get(plugin);
         if (messages == null) messages = new ArrayList<>();
@@ -29,6 +46,13 @@ public class MessageManager {
 
     }
 
+    /**
+     * Gets the Message object from a plugin instance
+     *
+     * @param plugin Plugin instance
+     * @param id     Message ID
+     * @return A potential Message object if it exists inside the plugin's message cache
+     */
     public Optional<Message> getMessage(DeltaPlugin plugin, String id) {
         ArrayList<Message> messages = registeredMessages.get(plugin);
         if (messages == null)

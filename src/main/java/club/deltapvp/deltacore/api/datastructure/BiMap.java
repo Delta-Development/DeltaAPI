@@ -10,12 +10,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * BiMap is an extended version of Map, HashMap, or whatever, which holds
- * 2 values rather than 1 value.
+ * BiMap is an extended version of {@link java.util.Map}, {@link java.util.HashMap},
+ * or whatever. This data class can hold 2 values rather than 1 value similar to
+ * {@link java.util.Map} or {@link java.util.HashMap} and any other data sets that
+ * do not hold 2 values.
  *
  * @param <K>  Key (Object)
- * @param <V>  Value 1 (Object)
- * @param <V1> Value 2 (Object)
+ * @param <V>  Value 1 (any Type)
+ * @param <V1> Value 2 (any Type)
  * @author Negative
  * @since August 4th, 2021
  */
@@ -249,7 +251,7 @@ public class BiMap<K, V, V1> {
      * @return Entry
      */
     private Optional<Entry<K, V, V1>> getEntry(K key) {
-        return data.stream().filter(e -> e.getKey().equals(key)).findFirst();
+        return data.stream().filter(e -> e.getKey().equals(key)).findAny();
     }
 
     /**
@@ -266,6 +268,11 @@ public class BiMap<K, V, V1> {
         return this.data.indexOf(entry);
     }
 
+    /**
+     * Returns the size of the BiMap
+     *
+     * @return Integer
+     */
     public int size() {
         return this.data.size();
     }
@@ -301,7 +308,7 @@ public class BiMap<K, V, V1> {
     }
 
     /**
-     * Stream interface for the BiMap
+     * Ability to stream the BiMap
      *
      * @return Stream
      */
@@ -312,7 +319,7 @@ public class BiMap<K, V, V1> {
     /**
      * Returns whether the Map is empty
      *
-     * @return true or false
+     * @return true is the dataset is empty
      */
     public boolean isEmpty() {
         return this.data.isEmpty();

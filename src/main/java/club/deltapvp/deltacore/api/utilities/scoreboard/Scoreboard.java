@@ -14,9 +14,11 @@ import java.util.function.Function;
 
 public abstract class Scoreboard {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private Function<Player, List<String>> scoreboardLines;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Function<Player, String> scoreboardTitle;
 
     public abstract String handle();

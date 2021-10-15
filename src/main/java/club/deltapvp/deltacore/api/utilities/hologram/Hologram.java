@@ -11,6 +11,7 @@ import java.util.function.BiConsumer;
  * Hologram
  *
  * @author Negative
+ * @apiNote I recommend using the packet based Hologram system. {@link club.deltapvp.deltacore.api.utilities.hologram.v2.Hologram}
  * @since August 28th, 2021
  */
 public interface Hologram {
