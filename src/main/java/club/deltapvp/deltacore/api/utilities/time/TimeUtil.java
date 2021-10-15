@@ -65,7 +65,7 @@ public class TimeUtil {
         String dayFormat = (dayNotZero ? toDays + (shortened ? "" : " ") + day + " " : "");
         String hourFormat = (hourNotZero ? toHour + (shortened ? "" : " ") + hour + " " : "");
         String minuteFormat = (minuteNotZero ? toMin + (shortened ? "" : " ") + minute + " " : "");
-        String secondFormat = (toSec + (shortened ? "" : " ") + second);
+        String secondFormat = (secondNotZero ? toSec + (shortened ? "" : " ") + second + " " : "");
 
         return new Message(format)
                 .replace("%day%", dayFormat)
