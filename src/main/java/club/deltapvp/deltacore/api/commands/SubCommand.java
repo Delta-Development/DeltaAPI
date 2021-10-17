@@ -15,15 +15,13 @@ import java.util.*;
  * SubCommand
  *
  * @author Negative
- * @apiNote Must be added to a ICommand class in order to work!
- * @deprecated Use {@link SubCommand}
+ * @apiNote Must be added to a {@link Command} class in order to work!
  */
-@Deprecated
-public abstract class ISubCommand {
+public abstract class SubCommand {
 
     // subcommands of subcommands lol
     @Getter
-    private final List<ISubCommand> subCommands = new ArrayList<>();
+    private final List<SubCommand> subCommands = new ArrayList<>();
     private final Message cannotUseThis;
     private final Message commandDisabled;
     private final Message noPerm;
@@ -47,7 +45,7 @@ public abstract class ISubCommand {
     private boolean disabled;
 
 
-    public ISubCommand() {
+    public SubCommand() {
         this(null, null);
     }
 
@@ -58,7 +56,7 @@ public abstract class ISubCommand {
      * @apiNote SubCommand argument and aliases are equalsIgnoreCase!
      * @apiNote There are no aliases for this constructor!
      */
-    public ISubCommand(String argument) {
+    public SubCommand(String argument) {
         this(argument, Collections.emptyList());
     }
 
@@ -69,7 +67,7 @@ public abstract class ISubCommand {
      * @param aliases  Aliases of the SubCommand
      * @apiNote SubCommand argument and aliases are equalsIgnoreCase!
      */
-    public ISubCommand(String argument, List<String> aliases) {
+    public SubCommand(String argument, List<String> aliases) {
         this.argument = argument;
         this.aliases = aliases;
 
@@ -126,7 +124,7 @@ public abstract class ISubCommand {
 
         // Checks if the SubCommand SubCommands are empty (subcommand seption)
         // if so, execute regular command
-        List<ISubCommand> subCommands = getSubCommands();
+        List<SubCommand> subCommands = getSubCommands();
         if (subCommands.isEmpty()) {
             runCommand(sender, args);
             return;
@@ -144,7 +142,7 @@ public abstract class ISubCommand {
         // Removes args 0
         String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
 
-        ISubCommand subCommand = subCommands.stream().filter(iSubCommand -> {
+        SubCommand subCommand = subCommands.stream().filter(iSubCommand -> {
             if (iSubCommand.getArgument().equalsIgnoreCase(arg))
                 return true;
 
@@ -173,7 +171,7 @@ public abstract class ISubCommand {
      *
      * @param subCommands SubCommand(s)
      */
-    public void addSubCommands(ISubCommand... subCommands) {
+    public void addSubCommands(SubCommand... subCommands) {
         this.subCommands.addAll(Arrays.asList(subCommands));
     }
 
@@ -184,7 +182,7 @@ public abstract class ISubCommand {
      * @param sender     Sender
      * @param args       Arguments
      */
-    private void runSubCommand(ISubCommand subCommand, CommandSender sender, String[] args) {
+    private void runSubCommand(SubCommand subCommand, CommandSender sender, String[] args) {
         subCommand.execute(sender, args);
     }
 

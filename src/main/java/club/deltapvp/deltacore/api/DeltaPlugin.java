@@ -70,7 +70,9 @@ public abstract class DeltaPlugin extends JavaPlugin {
      * Registers Commands without the use of plugin.yml
      *
      * @param commands Commands
+     * @deprecated Use {@link club.deltapvp.deltacore.api.commands.Command}
      */
+    @Deprecated
     public void registerCommands(ICommand... commands) {
         VersionChecker versionChecker = DeltaAPI.getInstance().getVersionChecker();
         Arrays.stream(commands).forEach(iCommand -> {
@@ -83,6 +85,39 @@ public abstract class DeltaPlugin extends JavaPlugin {
                 String name = iCommand.getName();
 
                 Command command = commandMap.getCommand(name);
+                if (command != null) {
+                    Map<String, Command> map;
+                    if (versionChecker.isLegacy()) {
+                        Field commandField = commandMap.getClass().getDeclaredField("knownCommands");
+                        commandField.setAccessible(true);
+                        map = (Map<String, Command>) commandField.get(commandMap);
+                    } else {
+                        map = (Map<String, Command>) commandMap.getClass().getDeclaredMethod("getKnownCommands").invoke(commandMap);
+                    }
+                    command.unregister(commandMap);
+                    map.remove(name);
+                    iCommand.getAliases().forEach(map::remove);
+                }
+
+                commandMap.register(name, iCommand);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void registerCommands(Command... commands) {
+        VersionChecker versionChecker = DeltaAPI.getInstance().getVersionChecker();
+        Arrays.stream(commands).forEach(iCommand -> {
+            try {
+                Server server = Bukkit.getServer();
+                Field field = server.getClass().getDeclaredField("commandMap");
+                field.setAccessible(true);
+                CommandMap commandMap = (CommandMap) field.get(server);
+
+                String name = iCommand.getName();
+
+                org.bukkit.command.Command command = commandMap.getCommand(name);
                 if (command != null) {
                     Map<String, Command> map;
                     if (versionChecker.isLegacy()) {

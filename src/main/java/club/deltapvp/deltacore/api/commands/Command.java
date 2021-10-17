@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
@@ -16,13 +15,9 @@ import org.bukkit.util.StringUtil;
 import java.util.*;
 import java.util.function.BiFunction;
 
-/**
- * @deprecated Use {@link club.deltapvp.deltacore.api.commands.Command}
- */
-@Deprecated
-public abstract class ICommand extends Command {
+public abstract class Command extends org.bukkit.command.Command {
     @Getter
-    private final List<ISubCommand> subCommands = new ArrayList<>();
+    private final List<SubCommand> subCommands = new ArrayList<>();
     private final Message cannotUseThis;
     private final Message commandDisabled;
     private final Message noPerm;
@@ -40,23 +35,23 @@ public abstract class ICommand extends Command {
     public String permissionNode = "";
     private TabCompleter completer;
 
-    public ICommand() {
+    public Command() {
         this("1");
     }
 
-    public ICommand(String name) {
+    public Command(String name) {
         this(name, "", Collections.emptyList());
     }
 
-    public ICommand(String name, String description) {
+    public Command(String name, String description) {
         this(name, description, Collections.emptyList());
     }
 
-    public ICommand(String name, List<String> aliases) {
+    public Command(String name, List<String> aliases) {
         this(name, "", aliases);
     }
 
-    public ICommand(String name, String description, List<String> aliases) {
+    public Command(String name, String description, List<String> aliases) {
         super(name, description, "/" + name, aliases);
 
         DeltaAPI api = DeltaAPI.getInstance();
@@ -130,7 +125,7 @@ public abstract class ICommand extends Command {
 
         // If there are no SubCommands for this Command
         // execute the regular command
-        List<ISubCommand> subCommands = getSubCommands();
+        List<SubCommand> subCommands = getSubCommands();
         if (subCommands.isEmpty()) {
             onCommand(sender, label, args);
             return true;
@@ -147,11 +142,11 @@ public abstract class ICommand extends Command {
         // Removes argument 0
         String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
 
-        ISubCommand subCommand = subCommands.stream().filter(iSubCommand -> {
-            if (iSubCommand.getArgument().equalsIgnoreCase(arg))
+        SubCommand subCommand = subCommands.stream().filter(subCommand1 -> {
+            if (subCommand1.getArgument().equalsIgnoreCase(arg))
                 return true;
 
-            List<String> aliases = iSubCommand.getAliases();
+            List<String> aliases = subCommand1.getAliases();
             // Checking if aliases is null or empty, if so, skip
             if (aliases == null || aliases.isEmpty())
                 return false;
@@ -176,7 +171,7 @@ public abstract class ICommand extends Command {
      * @param sender     Player/Sender
      * @param args       Arguments
      */
-    private void runSubCommand(ISubCommand subCommand, CommandSender sender, String[] args) {
+    private void runSubCommand(SubCommand subCommand, CommandSender sender, String[] args) {
         subCommand.execute(sender, args);
     }
 
@@ -211,7 +206,7 @@ public abstract class ICommand extends Command {
      *
      * @param subCommands SubCommand(s)
      */
-    public void addSubCommands(ISubCommand... subCommands) {
+    public void addSubCommands(SubCommand... subCommands) {
         this.subCommands.addAll(Arrays.asList(subCommands));
     }
 
