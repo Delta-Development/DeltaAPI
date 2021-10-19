@@ -31,12 +31,14 @@ public abstract class ObjectCache<T> {
 
     @Prototype
     public ArrayList<T> load(Class<? extends T> clazz) throws IOException {
-        File file = getFile(path);
-        if (file.exists()) {
-            Reader reader = new FileReader(file);
-            T[] p = gson.fromJson(reader, (Type) clazz);
-            return new ArrayList<>(Arrays.asList(p));
-        }
+        try {
+            File file = getFile(path);
+            if (file.exists()) {
+                Reader reader = new FileReader(file);
+                T[] p = gson.fromJson(reader, (Type) clazz);
+                return new ArrayList<>(Arrays.asList(p));
+            }
+        } catch (Exception ignored) {}
         return new ArrayList<>();
     }
 
