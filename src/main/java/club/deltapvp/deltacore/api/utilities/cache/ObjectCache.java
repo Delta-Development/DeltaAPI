@@ -7,6 +7,8 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class ObjectCache<T> {
 
@@ -30,15 +32,13 @@ public abstract class ObjectCache<T> {
     }
 
     @Prototype
-    public ArrayList<T> load(Class<? extends T> clazz) throws IOException {
-        try {
-            File file = getFile(path);
-            if (file.exists()) {
-                Reader reader = new FileReader(file);
-                T[] p = gson.fromJson(reader, (Type) clazz);
-                return new ArrayList<>(Arrays.asList(p));
-            }
-        } catch (Exception ignored) {}
+    public ArrayList<T> load(Class<T[]> clazz) throws IOException {
+        File file = getFile(path);
+        if (file.exists()) {
+            Reader reader = new FileReader(file);
+            T[] p = gson.fromJson(reader, clazz);
+            return new ArrayList<>(Arrays.asList(p));
+        }
         return new ArrayList<>();
     }
 
