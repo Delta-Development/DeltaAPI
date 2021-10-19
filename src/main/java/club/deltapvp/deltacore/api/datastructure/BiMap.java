@@ -46,7 +46,10 @@ public class BiMap<K, V, V1> {
         if (getEntry(key).isPresent())
             return;
 
-        Entry<K, V, V1> entry = new Entry<>(key, value1, value2);
+        Entry<K, V, V1> entry = new Entry<>(key);
+        entry.setValue1(value1);
+        entry.setValue2(value2);
+
         this.data.add(entry);
     }
 
@@ -78,7 +81,8 @@ public class BiMap<K, V, V1> {
         if (getEntry(key).isPresent())
             return;
 
-        Entry<K, V, V1> entry = new Entry<>(key, value1);
+        Entry<K, V, V1> entry = new Entry<>(key);
+        entry.setValue1(value1);
         this.data.add(entry);
     }
 
@@ -108,7 +112,9 @@ public class BiMap<K, V, V1> {
         if (getEntry(key).isPresent())
             return;
 
-        Entry<K, V, V1> entry = new Entry<>(key, null, value2);
+        Entry<K, V, V1> entry = new Entry<>(key);
+        entry.setValue2(value2);
+
         this.data.add(entry);
     }
 
@@ -385,16 +391,6 @@ public class BiMap<K, V, V1> {
         private final K key;
         private V value1;
         private V1 value2;
-
-        public Entry(K key, V value1) {
-            this(key, value1, null);
-        }
-
-        public Entry(K key, V value1, V1 value2) {
-            this.key = key;
-            this.value1 = value1;
-            this.value2 = value2;
-        }
 
     }
 }

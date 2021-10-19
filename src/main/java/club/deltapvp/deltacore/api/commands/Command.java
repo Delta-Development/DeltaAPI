@@ -8,12 +8,15 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public abstract class Command extends org.bukkit.command.Command {
     @Getter
@@ -73,6 +76,9 @@ public abstract class Command extends org.bukkit.command.Command {
             if (annotation.disabled())
                 setDisabled(true);
 
+            if (!annotation.description().isEmpty())
+                setDescription(annotation.description());
+
             List<String> a = new ArrayList<>(Arrays.asList(annotation.aliases()));
             // There will always be an empty index even if no arguments are
             // set. So the way you identify if there are actual arguments in the command
@@ -83,8 +89,6 @@ public abstract class Command extends org.bukkit.command.Command {
 
             if (!annotation.permission().isEmpty())
                 setPermissionNode(annotation.permission());
-        } else {
-            throw new NullPointerException("Command `" + getClass().getSimpleName() + "` does not have @CommandInfo annotation.");
         }
 
     }
@@ -98,7 +102,6 @@ public abstract class Command extends org.bukkit.command.Command {
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
         // If the Command is disabled, send this message
-
         if (isDisabled()) {
             commandDisabled.send(sender);
             return true;
@@ -117,7 +120,8 @@ public abstract class Command extends org.bukkit.command.Command {
         // If the permission node is not null and not empty
         // but, if the user doesn't have permission for the command
         // send this message
-        if (!getPermissionNode().isEmpty() && !sender.hasPermission(getPermissionNode())) {
+        String permNode = getPermissionNode();
+        if (!permNode.isEmpty() && !sender.hasPermission(permNode)) {
             noPerm.send(sender);
             return true;
         }
@@ -126,13 +130,7 @@ public abstract class Command extends org.bukkit.command.Command {
         // If there are no SubCommands for this Command
         // execute the regular command
         List<SubCommand> subCommands = getSubCommands();
-        if (subCommands.isEmpty()) {
-            onCommand(sender, label, args);
-            return true;
-        }
-
-        // If there are no args, execute the regular command
-        if (args.length == 0) {
+        if (args.length == 0 || subCommands.isEmpty()) {
             onCommand(sender, label, args);
             return true;
         }
@@ -142,24 +140,21 @@ public abstract class Command extends org.bukkit.command.Command {
         // Removes argument 0
         String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
 
-        SubCommand subCommand = subCommands.stream().filter(subCommand1 -> {
-            if (subCommand1.getArgument().equalsIgnoreCase(arg))
+        Optional<SubCommand> command = subCommands.stream().filter(subCmd -> {
+            if (subCmd.getArgument().equalsIgnoreCase(arg))
                 return true;
 
-            List<String> aliases = subCommand1.getAliases();
-            // Checking if aliases is null or empty, if so, skip
+            List<String> aliases = subCmd.getAliases();
             if (aliases == null || aliases.isEmpty())
                 return false;
 
             return aliases.contains(arg.toLowerCase());
-        }).findFirst().orElse(null);
+        }).findFirst();
 
-        if (subCommand != null) {
-            runSubCommand(subCommand, sender, newArgs);
-            return true;
-        }
-        // If all else fails, execute the regular command
-        onCommand(sender, label, args);
+        if (command.isPresent())
+            runSubCommand(command.get(), sender, newArgs);
+        else
+            onCommand(sender, label, args);
 
         return true;
     }
@@ -176,10 +171,12 @@ public abstract class Command extends org.bukkit.command.Command {
     }
 
     /**
+     * @deprecated Never used and kind of useless.
      * @param sender - Sender of the command. Usually a player
      * @param perm   - Permission node
      * @return - Returns whether the player has the permission provided in the "perm" String
      */
+    @Deprecated
     public boolean hasPermission(CommandSender sender, String perm) {
         Server server = Bukkit.getServer();
         Player p = server.getPlayer(sender.getName());
@@ -188,6 +185,26 @@ public abstract class Command extends org.bukkit.command.Command {
         } else {
             return p.hasPermission(perm);
         }
+    }
+
+    public void ifHasPermission(CommandSender sender, String perm, Consumer<CommandSender> consumer) {
+        if (sender.hasPermission(perm))
+            consumer.accept(sender);
+    }
+
+    public void ifNotHasPermission(CommandSender sender, String perm, Consumer<CommandSender> consumer) {
+        if (!sender.hasPermission(perm))
+            consumer.accept(sender);
+    }
+
+    public void ifPlayer(CommandSender sender, Consumer<Player> consumer) {
+        if (sender instanceof Player)
+            consumer.accept((Player) sender);
+    }
+
+    public void ifConsole(CommandSender sender, Consumer<ConsoleCommandSender> consumer) {
+        if (sender instanceof ConsoleCommandSender)
+            consumer.accept((ConsoleCommandSender) sender);
     }
 
     /**

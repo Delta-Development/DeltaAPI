@@ -1,5 +1,6 @@
 package club.deltapvp.deltacore.api.utilities;
 
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -14,7 +15,7 @@ public class UtilPlayer {
      *
      * @param player Player
      */
-    public void reset(Player player) {
+    public void reset(@NonNull Player player) {
         for (PotionEffect effect : player.getActivePotionEffects())
             player.removePotionEffect(effect.getType());
         player.setWalkSpeed(0.2F);
@@ -46,7 +47,7 @@ public class UtilPlayer {
      * @param l2  Location 3
      * @return true or false
      */
-    public boolean isInside(Location loc, Location l1, Location l2) {
+    public boolean isInside(@NonNull Location loc, @NonNull Location l1, @NonNull Location l2) {
         int x = loc.getBlockX();
         int y = loc.getBlockY();
         int z = loc.getBlockZ();
@@ -66,7 +67,7 @@ public class UtilPlayer {
      * @param player Player
      * @return Returns true if the player's inventory is full, returns false if it is not.
      */
-    public boolean isInventoryFull(Player player) {
+    public boolean isInventoryFull(@NonNull Player player) {
         return player.getInventory().firstEmpty() == -1;
     }
 
