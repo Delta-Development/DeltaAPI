@@ -27,6 +27,14 @@ public @interface CommandInfo {
     // not required
     String permission() default "";
 
+    // Description of the command
+    // not required
+
+    /**
+     * @apiNote Only works for {@link club.deltapvp.deltacore.api.commands.Command}!!
+     */
+    String description() default "";
+
     // Is this command console only?
     // not required
     boolean consoleOnly() default false;

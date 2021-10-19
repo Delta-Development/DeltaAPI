@@ -89,8 +89,6 @@ public abstract class SubCommand {
             if (!annotation.permission().isEmpty())
                 setPermission(annotation.permission());
 
-        } else {
-            throw new NullPointerException("Sub-Command does not have @CommandInfo annotation.");
         }
     }
 
@@ -125,14 +123,7 @@ public abstract class SubCommand {
         // Checks if the SubCommand SubCommands are empty (subcommand seption)
         // if so, execute regular command
         List<SubCommand> subCommands = getSubCommands();
-        if (subCommands.isEmpty()) {
-            runCommand(sender, args);
-            return;
-        }
-
-        // Checks if args is 0
-        // if so, execute regular command
-        if (args.length == 0) {
+        if (args.length == 0 || subCommands.isEmpty()) {
             runCommand(sender, args);
             return;
         }
@@ -142,25 +133,21 @@ public abstract class SubCommand {
         // Removes args 0
         String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
 
-        SubCommand subCommand = subCommands.stream().filter(iSubCommand -> {
-            if (iSubCommand.getArgument().equalsIgnoreCase(arg))
+        Optional<SubCommand> command = subCommands.stream().filter(subCmd -> {
+            if (subCmd.getArgument().equalsIgnoreCase(arg))
                 return true;
 
-            List<String> aliases = iSubCommand.getAliases();
-            // Checking if aliases is null or empty, if so, skip
+            List<String> aliases = subCmd.getAliases();
             if (aliases == null || aliases.isEmpty())
                 return false;
 
             return aliases.contains(arg.toLowerCase());
-        }).findFirst().orElse(null);
+        }).findFirst();
 
-        if (subCommand != null) {
-            runSubCommand(subCommand, sender, newArgs);
-            return;
-        }
-
-        // If all else fails, run the command!
-        runCommand(sender, args);
+        if (command.isPresent())
+            runSubCommand(command.get(), sender, newArgs);
+        else
+            runCommand(sender, args);
     }
 
     public abstract void runCommand(CommandSender sender, String[] args);

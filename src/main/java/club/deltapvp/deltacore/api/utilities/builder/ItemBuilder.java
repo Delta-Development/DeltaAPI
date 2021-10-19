@@ -101,7 +101,7 @@ public class ItemBuilder {
      * Add an unsafe enchantment.
      *
      * @param ench  The enchantment to add.
-     * @param level The level to put the enchant on.
+     * @param level The level to put the enchantment on.
      */
     public ItemBuilder addUnsafeEnchantment(Enchantment ench, int level) {
         is.addUnsafeEnchantment(ench, level);
@@ -144,15 +144,14 @@ public class ItemBuilder {
             SkullMeta im = (SkullMeta) is.getItemMeta();
             im.setOwner(owner);
             is.setItemMeta(im);
-        } catch (ClassCastException expected) {
-        }
+        } catch (ClassCastException ignored) {}
         return this;
     }
 
     /**
      * Add an enchant to the item.
      *
-     * @param ench  The enchant to add
+     * @param ench  The enchantment to add
      * @param level The level
      */
     public ItemBuilder addEnchant(Enchantment ench, int level) {
@@ -261,7 +260,7 @@ public class ItemBuilder {
      * Sets the dye color of a wool item. Works only on wool.
      *
      * @param color The DyeColor to set the wool item to.
-     * @see ItemBuilder@setDyeColor(DyeColor)
+     * @see ItemBuilder#setDyeColor(DyeColor)
      * @deprecated As of version 1.2 changed to setDyeColor.
      */
     @Deprecated

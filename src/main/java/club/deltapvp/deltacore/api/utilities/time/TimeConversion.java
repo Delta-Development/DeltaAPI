@@ -1,5 +1,11 @@
 package club.deltapvp.deltacore.api.utilities.time;
 
+import club.deltapvp.deltacore.api.DeltaAPI;
+
+/**
+ * @deprecated Please use {@link TimeUtil}
+ * @apiNote This class and method {@link DeltaAPI#getTimeConverter()} will be removed in upcoming versions
+ */
 @Deprecated
 public interface TimeConversion {
 

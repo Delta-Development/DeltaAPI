@@ -26,6 +26,7 @@ public class BaseGUI implements InventoryHolder {
             gui.getOnClose().accept(player, event);
 
         gui.getActiveInventories().remove(player);
+
         BukkitTask autoRefreshTask = gui.getAutoRefreshTask();
         if (autoRefreshTask != null)
             autoRefreshTask.cancel();

@@ -13,6 +13,7 @@ import club.deltapvp.deltacore.api.utilities.skull.CustomSkull;
 import club.deltapvp.deltacore.api.utilities.time.TimeConversion;
 import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
@@ -38,14 +39,15 @@ public abstract class DeltaAPI {
 
     public abstract InputListener getInputListener();
 
-    public abstract Message createMessage(String... message);
+    public abstract Message createMessage(@NonNull String... message);
 
-    public abstract Message createMessage(String message);
+    public abstract Message createMessage(@NonNull String message);
 
-    public abstract Message createMessage(List<String> message);
+    public abstract Message createMessage(@NonNull List<String> message);
 
     /**
      * @deprecated Use {@link club.deltapvp.deltacore.api.utilities.time.TimeUtil}
+     * @apiNote The class {@link TimeConversion} and this method will be removed in upcoming versions
      */
     @Deprecated
     public abstract TimeConversion getTimeConverter();
@@ -60,7 +62,7 @@ public abstract class DeltaAPI {
 
     public abstract HologramManager getHologramManager();
 
-    public abstract CustomSkull createCustomSkull(String url);
+    public abstract CustomSkull createCustomSkull(@NonNull String url);
 
     public abstract VirtualSignEditor getVirtualSignEditor();
 }

@@ -3,6 +3,7 @@ package club.deltapvp.deltacore.api;
 import club.deltapvp.deltacore.api.commands.ICommand;
 import club.deltapvp.deltacore.api.utilities.runnable.RunnableSettings;
 import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -45,7 +46,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
      * @param plugin Plugin instance
      * @param names  File names
      */
-    public void loadFiles(JavaPlugin plugin, String... names) {
+    public void loadFiles(@NonNull JavaPlugin plugin, @NonNull String... names) {
         File dataFolder = plugin.getDataFolder();
         DeltaAPI api = DeltaAPI.getInstance();
         Arrays.stream(names).forEach(name -> {
@@ -70,7 +71,8 @@ public abstract class DeltaPlugin extends JavaPlugin {
      * Registers Commands without the use of plugin.yml
      *
      * @param commands Commands
-     * @deprecated Use {@link club.deltapvp.deltacore.api.commands.Command}
+     * @deprecated Use {@link club.deltapvp.deltacore.api.commands.Command} ad your command base
+     * and use {@link DeltaPlugin#registerCommands(Command...)} to register said commands.
      */
     @Deprecated
     public void registerCommands(ICommand... commands) {
@@ -106,7 +108,8 @@ public abstract class DeltaPlugin extends JavaPlugin {
         });
     }
 
-    public void registerCommands(Command... commands) {
+    @SuppressWarnings("unchecked")
+    public void registerCommands(@NonNull Command... commands) {
         VersionChecker versionChecker = DeltaAPI.getInstance().getVersionChecker();
         Arrays.stream(commands).forEach(iCommand -> {
             try {
@@ -144,7 +147,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
      *
      * @param listeners Listeners
      */
-    public void registerListeners(Listener... listeners) {
+    public void registerListeners(@NonNull Listener... listeners) {
         PluginManager pluginManager = Bukkit.getPluginManager();
         Arrays.stream(listeners).forEach(listener -> pluginManager.registerEvents(listener, this));
     }
@@ -155,7 +158,7 @@ public abstract class DeltaPlugin extends JavaPlugin {
      *
      * @param runnables Runnables
      */
-    public void registerRunnables(BukkitRunnable... runnables) {
+    public void registerRunnables(@NonNull BukkitRunnable... runnables) {
         Arrays.stream(runnables).filter(runnable -> runnable.getClass().isAnnotationPresent(RunnableSettings.class))
                 .forEach(runnable -> {
                     RunnableSettings annotation = runnable.getClass().getAnnotation(RunnableSettings.class);

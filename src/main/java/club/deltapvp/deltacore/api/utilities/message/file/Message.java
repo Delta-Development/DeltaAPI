@@ -116,7 +116,7 @@ public class Message {
      *
      * @return List of Strings
      */
-    private List<String> getModifiableContent() {
+    public List<String> getModifiableContent() {
         return modifiableContent;
     }
 
@@ -125,7 +125,7 @@ public class Message {
      *
      * @param modifiableContent List of Strings
      */
-    private void setModifiableContent(List<String> modifiableContent) {
+    public void setModifiableContent(List<String> modifiableContent) {
         this.modifiableContent = modifiableContent;
     }
 }
