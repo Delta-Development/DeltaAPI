@@ -94,7 +94,8 @@ public class GUI {
         items.forEach((index, item) -> {
             try {
                 inv.setItem(index, item.apply(player));
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         });
 
         player.openInventory(inv);
@@ -175,7 +176,8 @@ public class GUI {
         items.forEach((slot, item) -> {
             try {
                 inv.setItem(slot, item.apply(player));
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         });
     }
 

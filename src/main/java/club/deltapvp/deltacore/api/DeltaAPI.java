@@ -46,8 +46,8 @@ public abstract class DeltaAPI {
     public abstract Message createMessage(@NonNull List<String> message);
 
     /**
-     * @deprecated Use {@link club.deltapvp.deltacore.api.utilities.time.TimeUtil}
      * @apiNote The class {@link TimeConversion} and this method will be removed in upcoming versions
+     * @deprecated Use {@link club.deltapvp.deltacore.api.utilities.time.TimeUtil}
      */
     @Deprecated
     public abstract TimeConversion getTimeConverter();
