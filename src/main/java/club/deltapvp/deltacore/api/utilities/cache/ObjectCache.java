@@ -1,28 +1,18 @@
 package club.deltapvp.deltacore.api.utilities.cache;
 
 import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@RequiredArgsConstructor
 public abstract class ObjectCache<T> {
 
     private final String path;
     private final Class<T[]> clazz;
-    private final Gson gson;
-
-    /**
-     * Constructor for the ObjectCache
-     *
-     * @param path  Path to where the cache will be saved to JSON
-     * @param clazz Class Type Array
-     */
-    public ObjectCache(String path, Class<T[]> clazz) {
-        this.path = path;
-        this.clazz = clazz;
-        gson = new Gson();
-    }
+    private final Gson gson = new Gson();
 
     /**
      * Save the Cache to the JSON file

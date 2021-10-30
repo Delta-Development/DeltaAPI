@@ -4,6 +4,7 @@ import club.deltapvp.deltacore.api.commands.ICommand;
 import club.deltapvp.deltacore.api.utilities.runnable.RunnableSettings;
 import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -108,14 +109,17 @@ public abstract class DeltaPlugin extends JavaPlugin {
         });
     }
 
+    @SneakyThrows
     @SuppressWarnings("unchecked")
     public void registerCommands(@NonNull Command... commands) {
         VersionChecker versionChecker = DeltaAPI.getInstance().getVersionChecker();
+
+        Server server = Bukkit.getServer();
+        Field field = server.getClass().getDeclaredField("commandMap");
+        field.setAccessible(true);
+
         Arrays.stream(commands).forEach(iCommand -> {
             try {
-                Server server = Bukkit.getServer();
-                Field field = server.getClass().getDeclaredField("commandMap");
-                field.setAccessible(true);
                 CommandMap commandMap = (CommandMap) field.get(server);
 
                 String name = iCommand.getName();

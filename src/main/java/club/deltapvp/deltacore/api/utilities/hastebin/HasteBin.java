@@ -44,6 +44,7 @@ public class HasteBin {
             e.printStackTrace();
         }
 
+        assert response != null;
         if (response.contains("\"key\"")) {
             response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 

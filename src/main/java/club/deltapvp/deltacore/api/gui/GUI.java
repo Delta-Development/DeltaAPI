@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -91,12 +92,8 @@ public class GUI {
         BaseGUI holder = new BaseGUI(this);
         Inventory inv = Bukkit.createInventory(holder, (9 * rows), ChatColor.translateAlternateColorCodes('&', title));
 
-        items.forEach((index, item) -> {
-            try {
-                inv.setItem(index, item.apply(player));
-            } catch (Exception ignored) {
-            }
-        });
+        // Will simply put the items in the corresponding slots
+        refresh(player);
 
         player.openInventory(inv);
         activeInventories.put(player, inv);
@@ -122,9 +119,7 @@ public class GUI {
      * @param function     Click Event of the Item
      */
     public void setItemClickEvent(int index, Function<Player, ItemStack> itemFunction, BiConsumer<Player, InventoryClickEvent> function) {
-        if (function != null)
-            clickEvents.put(index, function);
-
+        Optional.ofNullable(function).ifPresent(func -> clickEvents.put(index, func));
         items.put(index, itemFunction);
     }
 
@@ -169,16 +164,13 @@ public class GUI {
      * @param player Player
      */
     public void refresh(Player player) {
-        if (activeInventories.get(player) == null)
-            return;
-
-        Inventory inv = activeInventories.get(player);
-        items.forEach((slot, item) -> {
-            try {
-                inv.setItem(slot, item.apply(player));
-            } catch (Exception ignored) {
-            }
-        });
+        Optional.ofNullable(activeInventories.get(player))
+                .ifPresent(inventory -> items.forEach((slot, item) -> {
+                    try {
+                        inventory.setItem(slot, item.apply(player));
+                    } catch (Exception ignored) {
+                    }
+                }));
     }
 
     /**
@@ -193,8 +185,7 @@ public class GUI {
      */
     public void setAutoRefreshInterval(DeltaPlugin plugin, Player player, int seconds) {
         BukkitTask autoRefreshTask = this.autoRefreshTask;
-        if (autoRefreshTask != null)
-            autoRefreshTask.cancel();
+        Optional.ofNullable(autoRefreshTask).ifPresent(BukkitTask::cancel);
 
         this.autoRefreshTask = new BukkitRunnable() {
 

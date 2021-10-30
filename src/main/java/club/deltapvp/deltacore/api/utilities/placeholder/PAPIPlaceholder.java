@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
+@Deprecated // Will be removed
 public abstract class PAPIPlaceholder {
 
     private final ArrayList<PAPIPlaceholder> subPlaceholders = new ArrayList<>();
