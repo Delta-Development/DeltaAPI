@@ -18,7 +18,6 @@ public abstract class ObjectCache<T> {
      * Save the Cache to the JSON file
      *
      * @param cacheArrayList Class Type ArrayList
-     * @throws IOException
      */
     public void save(ArrayList<T> cacheArrayList) throws IOException {
         File file = getFile(path);
