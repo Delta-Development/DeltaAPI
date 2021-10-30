@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 
+@Deprecated // Unused
 @RequiredArgsConstructor
 @Getter
 @Prototype

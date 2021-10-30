@@ -1,25 +1,24 @@
 package club.deltapvp.deltacore.api.utilities.cache;
 
-import club.deltapvp.deltacore.api.annotation.Prototype;
 import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
+@RequiredArgsConstructor
 public abstract class ObjectCache<T> {
 
     private final String path;
-    private final Gson gson;
+    private final Class<T[]> clazz;
+    private final Gson gson = new Gson();
 
-    public ObjectCache(String path) {
-        this.path = path;
-        gson = new Gson();
-    }
-
+    /**
+     * Save the Cache to the JSON file
+     *
+     * @param cacheArrayList Class Type ArrayList
+     */
     public void save(ArrayList<T> cacheArrayList) throws IOException {
         File file = getFile(path);
         file.getParentFile().mkdir();
@@ -31,8 +30,13 @@ public abstract class ObjectCache<T> {
         writer.close();
     }
 
-    @Prototype
-    public ArrayList<T> load(Class<T[]> clazz) throws IOException {
+    /**
+     * Load the Cache from the JSON file
+     *
+     * @return A new instance of an ArrayList with the new Cache
+     * @throws IOException
+     */
+    public ArrayList<T> load() throws IOException {
         File file = getFile(path);
         if (file.exists()) {
             Reader reader = new FileReader(file);

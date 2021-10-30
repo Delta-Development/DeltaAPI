@@ -8,9 +8,8 @@ import lombok.Setter;
  * DeltaAPI's SQL Management Class
  *
  * @author Negative
- *
+ * <p>
  * This class is where you can create connects to a MySQL or SQLite database!
- *
  * @see {@link DeltaSQLAPI#createConnection(String, String, String, String, String)} to create a connection for MySQL
  * @see {@link DeltaSQLAPI#createConnection(String, String, String)} to create a SQLite connection
  */

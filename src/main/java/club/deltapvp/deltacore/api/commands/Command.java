@@ -16,7 +16,6 @@ import org.bukkit.util.StringUtil;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public abstract class Command extends org.bukkit.command.Command {
     @Getter
@@ -171,10 +170,10 @@ public abstract class Command extends org.bukkit.command.Command {
     }
 
     /**
-     * @deprecated Never used and kind of useless.
      * @param sender - Sender of the command. Usually a player
      * @param perm   - Permission node
      * @return - Returns whether the player has the permission provided in the "perm" String
+     * @deprecated Never used and kind of useless.
      */
     @Deprecated
     public boolean hasPermission(CommandSender sender, String perm) {

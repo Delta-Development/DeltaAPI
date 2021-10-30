@@ -12,6 +12,7 @@ package club.deltapvp.deltacore.api.utilities.version;
  */
 public enum ServerVersion {
 
+    V1_18,
     V1_17,
     V1_16,
     V1_15,

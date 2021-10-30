@@ -5,4 +5,7 @@ public interface VersionChecker {
     boolean isModern();
 
     boolean isLegacy();
+
+    ServerVersion getVersion();
+
 }

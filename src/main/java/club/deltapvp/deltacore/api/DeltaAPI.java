@@ -10,7 +10,6 @@ import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import club.deltapvp.deltacore.api.utilities.serialization.BukkitSerializer;
 import club.deltapvp.deltacore.api.utilities.sign.VirtualSignEditor;
 import club.deltapvp.deltacore.api.utilities.skull.CustomSkull;
-import club.deltapvp.deltacore.api.utilities.time.TimeConversion;
 import club.deltapvp.deltacore.api.utilities.version.VersionChecker;
 import lombok.Getter;
 import lombok.NonNull;
@@ -44,13 +43,6 @@ public abstract class DeltaAPI {
     public abstract Message createMessage(@NonNull String message);
 
     public abstract Message createMessage(@NonNull List<String> message);
-
-    /**
-     * @deprecated Use {@link club.deltapvp.deltacore.api.utilities.time.TimeUtil}
-     * @apiNote The class {@link TimeConversion} and this method will be removed in upcoming versions
-     */
-    @Deprecated
-    public abstract TimeConversion getTimeConverter();
 
     public abstract UpdateChecker getUpdateChecker();
 
