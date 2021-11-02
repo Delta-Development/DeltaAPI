@@ -92,11 +92,11 @@ public class GUI {
         BaseGUI holder = new BaseGUI(this);
         Inventory inv = Bukkit.createInventory(holder, (9 * rows), ChatColor.translateAlternateColorCodes('&', title));
 
-        // Will simply put the items in the corresponding slots
-        refresh(player);
-
         player.openInventory(inv);
         activeInventories.put(player, inv);
+
+        // Will simply put the items in the corresponding slots
+        refresh(player);
     }
 
     /**

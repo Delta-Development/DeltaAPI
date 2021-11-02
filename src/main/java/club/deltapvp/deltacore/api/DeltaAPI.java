@@ -38,11 +38,11 @@ public abstract class DeltaAPI {
 
     public abstract InputListener getInputListener();
 
-    public abstract Message createMessage(@NonNull String... message);
+    public abstract Message createMessage(String... message);
 
-    public abstract Message createMessage(@NonNull String message);
+    public abstract Message createMessage(String message);
 
-    public abstract Message createMessage(@NonNull List<String> message);
+    public abstract Message createMessage(List<String> message);
 
     public abstract UpdateChecker getUpdateChecker();
 
