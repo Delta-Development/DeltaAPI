@@ -47,4 +47,6 @@ public @interface CommandInfo {
     // not required
     boolean disabled() default false;
 
+    String[] shortCommands() default "";
+
 }

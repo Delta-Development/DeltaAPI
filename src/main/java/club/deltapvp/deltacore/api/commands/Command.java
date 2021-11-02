@@ -2,6 +2,7 @@ package club.deltapvp.deltacore.api.commands;
 
 import club.deltapvp.deltacore.api.DeltaAPI;
 import club.deltapvp.deltacore.api.commands.annotation.CommandInfo;
+import club.deltapvp.deltacore.api.commands.shortcommands.ShortCommands;
 import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import lombok.Getter;
 import lombok.Setter;
@@ -88,6 +89,11 @@ public abstract class Command extends org.bukkit.command.Command {
 
             if (!annotation.permission().isEmpty())
                 setPermissionNode(annotation.permission());
+
+            List<String> shortCmds = new ArrayList<>(Arrays.asList(annotation.shortCommands()));
+            if (!shortCmds.get(0).isEmpty()) {
+                ShortCommands.getInstance().addShortCommand(this, annotation.shortCommands());
+            }
         }
 
     }
