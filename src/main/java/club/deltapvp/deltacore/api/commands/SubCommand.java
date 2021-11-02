@@ -2,6 +2,7 @@ package club.deltapvp.deltacore.api.commands;
 
 import club.deltapvp.deltacore.api.DeltaAPI;
 import club.deltapvp.deltacore.api.commands.annotation.CommandInfo;
+import club.deltapvp.deltacore.api.commands.shortcommands.ShortCommands;
 import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import lombok.Getter;
 import lombok.Setter;
@@ -80,15 +81,21 @@ public abstract class SubCommand {
             CommandInfo annotation = this.getClass().getAnnotation(CommandInfo.class);
             setArgument(annotation.name());
 
-            if (annotation.aliases().length != 0) {
-                String[] alias = annotation.aliases();
-                List<String> a = new ArrayList<>(Arrays.asList(alias));
+            List<String> a = new ArrayList<>(Arrays.asList(annotation.aliases()));
+            // There will always be an empty index even if no arguments are
+            // set. So the way you identify if there are actual arguments in the command
+            // is you check if the first index is empty.
+            if (!a.get(0).isEmpty()) {
                 setAliases(a);
             }
 
             if (!annotation.permission().isEmpty())
                 setPermission(annotation.permission());
 
+            List<String> shortCmds = new ArrayList<>(Arrays.asList(annotation.shortCommands()));
+            if (!shortCmds.get(0).isEmpty()) {
+                ShortCommands.getInstance().addShortSubCommand(this, annotation.shortCommands());
+            }
         }
     }
 
