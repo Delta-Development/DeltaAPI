@@ -22,6 +22,7 @@ import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -51,6 +52,7 @@ public abstract class Command extends org.bukkit.command.Command {
     @Getter
     @Setter
     public String permissionNode = "";
+    private String[] params;
     private TabCompleter completer;
 
     public Command() {
@@ -109,6 +111,11 @@ public abstract class Command extends org.bukkit.command.Command {
             if (!shortCmds.get(0).isEmpty()) {
                 ShortCommands.getInstance().addShortCommand(this, annotation.shortCommands());
             }
+
+            List<String> paramList = new ArrayList<>(Arrays.asList(annotation.args()));
+            if (!paramList.get(0).isEmpty()) {
+                this.params = annotation.args();
+            }
         }
 
     }
@@ -151,6 +158,14 @@ public abstract class Command extends org.bukkit.command.Command {
         // execute the regular command
         List<SubCommand> subCommands = getSubCommands();
         if (args.length == 0 || subCommands.isEmpty()) {
+            if (params != null && (args.length < params.length)) {
+                StringBuilder builder = new StringBuilder();
+                for (String param : params) {
+                    builder.append(param).append(" ");
+                }
+                sender.sendMessage(ChatColor.RED + "Usage: /" + this.getName() + " " + builder);
+                return true;
+            }
             onCommand(sender, label, args);
             return true;
         }
@@ -173,9 +188,17 @@ public abstract class Command extends org.bukkit.command.Command {
 
         if (command.isPresent())
             runSubCommand(command.get(), sender, newArgs);
-        else
+        else {
+            if (params != null && (args.length < params.length)) {
+                StringBuilder builder = new StringBuilder();
+                for (String param : params) {
+                    builder.append(param).append(" ");
+                }
+                sender.sendMessage(ChatColor.RED + "Usage: /" + this.getName() + " " + builder);
+                return true;
+            }
             onCommand(sender, label, args);
-
+        }
         return true;
     }
 

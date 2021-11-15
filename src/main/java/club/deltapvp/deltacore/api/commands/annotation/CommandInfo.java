@@ -64,4 +64,6 @@ public @interface CommandInfo {
 
     String[] shortCommands() default "";
 
+    String[] args() default "";
+
 }
