@@ -161,7 +161,7 @@ public abstract class Command extends org.bukkit.command.Command {
             if (params != null && (args.length < params.length)) {
                 StringBuilder builder = new StringBuilder();
                 for (String param : params) {
-                    builder.append(param).append(" ");
+                    builder.append("<").append(param).append(">").append(" ");
                 }
                 sender.sendMessage(ChatColor.RED + "Usage: /" + this.getName() + " " + builder);
                 return true;
@@ -192,7 +192,7 @@ public abstract class Command extends org.bukkit.command.Command {
             if (params != null && (args.length < params.length)) {
                 StringBuilder builder = new StringBuilder();
                 for (String param : params) {
-                    builder.append(param).append(" ");
+                    builder.append("<").append(param).append(">").append(" ");
                 }
                 sender.sendMessage(ChatColor.RED + "Usage: /" + this.getName() + " " + builder);
                 return true;
