@@ -22,6 +22,7 @@ import club.deltapvp.deltacore.api.utilities.message.iface.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -59,6 +60,7 @@ public abstract class SubCommand {
     @Getter
     @Setter
     private boolean disabled;
+    private String[] params;
 
 
     public SubCommand() {
@@ -111,6 +113,11 @@ public abstract class SubCommand {
             if (!shortCmds.get(0).isEmpty()) {
                 ShortCommands.getInstance().addShortSubCommand(this, annotation.shortCommands());
             }
+
+            List<String> paramList = new ArrayList<>(Arrays.asList(annotation.args()));
+            if (!paramList.get(0).isEmpty()) {
+                this.params = annotation.args();
+            }
         }
     }
 
@@ -146,6 +153,14 @@ public abstract class SubCommand {
         // if so, execute regular command
         List<SubCommand> subCommands = getSubCommands();
         if (args.length == 0 || subCommands.isEmpty()) {
+            if (params != null && (args.length < params.length)) {
+                StringBuilder builder = new StringBuilder();
+                for (String param : params) {
+                    builder.append("<").append(param).append(">").append(" ");
+                }
+                sender.sendMessage(ChatColor.RED + "Usage: /" + this.getArgument() + " " + builder);
+                return;
+            }
             runCommand(sender, args);
             return;
         }
@@ -168,8 +183,17 @@ public abstract class SubCommand {
 
         if (command.isPresent())
             runSubCommand(command.get(), sender, newArgs);
-        else
+        else {
+            if (params != null && (args.length < params.length)) {
+                StringBuilder builder = new StringBuilder();
+                for (String param : params) {
+                    builder.append("<").append(param).append(">").append(" ");
+                }
+                sender.sendMessage(ChatColor.RED + "Usage: /" + this.getArgument() + " " + builder);
+                return;
+            }
             runCommand(sender, args);
+        }
     }
 
     public abstract void runCommand(CommandSender sender, String[] args);
