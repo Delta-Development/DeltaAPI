@@ -16,6 +16,7 @@
 package club.deltapvp.api.gui;
 
 import club.deltapvp.api.DeltaPlugin;
+import club.deltapvp.api.gui.internal.MenuItem;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -28,8 +29,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -43,20 +44,13 @@ import java.util.function.Function;
  */
 public class GUI {
 
-    // Item placement map
-    @Getter
-    private final Map<Integer, Function<Player, ItemStack>> items;
-    // Rows amount (9 * rows)
     @Getter
     private final int rows;
-    // Title of the GUI
     @Getter
     private final String title;
-    // Inventory Click event map
     @Getter
-    private final HashMap<Integer, BiConsumer<Player, InventoryClickEvent>> clickEvents;
+    private final ArrayList<MenuItem> items;
 
-    // Map of active inventories
     @Getter
     private final HashMap<Player, Inventory> activeInventories;
     // Are people allowed to take items from the GUI?
@@ -93,8 +87,7 @@ public class GUI {
         this.title = title;
         this.allowTakeItems = allowTakeItems;
 
-        items = new HashMap<>();
-        clickEvents = new HashMap<>();
+        items = new ArrayList<>();
         activeInventories = new HashMap<>();
     }
 
@@ -134,8 +127,8 @@ public class GUI {
      * @param function     Click Event of the Item
      */
     public void setItemClickEvent(int index, Function<Player, ItemStack> itemFunction, BiConsumer<Player, InventoryClickEvent> function) {
-        Optional.ofNullable(function).ifPresent(func -> clickEvents.put(index, func));
-        items.put(index, itemFunction);
+        MenuItem menuItem = new MenuItem(index, itemFunction, function);
+        items.add(menuItem);
     }
 
     /**
@@ -148,13 +141,13 @@ public class GUI {
     public void addItemClickEvent(Function<Player, ItemStack> itemFunction, BiConsumer<Player, InventoryClickEvent> function) {
         int i;
         for (i = 0; i < (9 * rows); i++) {
-            if (function != null && !clickEvents.containsKey(i) && !items.containsKey(i))
-                break;
-
-            if (!items.containsKey(i))
+            int indexSlot = i;
+            boolean inSlot = items.stream().anyMatch(menuItem -> menuItem.getSlot() == indexSlot);
+            if (inSlot)
                 break;
 
         }
+
         setItemClickEvent(i, itemFunction, function);
     }
 
@@ -165,12 +158,7 @@ public class GUI {
      * @apiNote This adds the Item to the next available slot
      */
     public void addItem(Function<Player, ItemStack> itemFunction) {
-        int i;
-        for (i = 0; i < (9 * rows); i++) {
-            if (!items.containsKey(i))
-                break;
-        }
-        setItem(i, itemFunction);
+        addItemClickEvent(itemFunction, null);
     }
 
     /**
@@ -179,13 +167,8 @@ public class GUI {
      * @param player Player
      */
     public void refresh(Player player) {
-        Optional.ofNullable(activeInventories.get(player))
-                .ifPresent(inventory -> items.forEach((slot, item) -> {
-                    try {
-                        inventory.setItem(slot, item.apply(player));
-                    } catch (Exception ignored) {
-                    }
-                }));
+        Optional.ofNullable(activeInventories.get(player)).ifPresent(inventory ->
+                items.forEach(menuItem -> inventory.setItem(menuItem.getSlot(), menuItem.getItem().apply(player))));
     }
 
     /**
